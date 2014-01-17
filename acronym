@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+#
+# acronym -- Look for acronyms on acronymfinder.com
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+import sys
+import re
+from http.client import HTTPConnection
+
+
+ACRONYM = sys.argv[1]
+
+# If no acronym is given in the command line; read from stdin.
+if len(ACRONYM) == 0:
+    for line in sys.stdin:
+        ACRONYM += line.split()
+
+# Create search url
+search = "/"+ACRONYM+".html"
+
+# Connect to acronymfinder.com and request result.
+conn = HTTPConnection("www.acronymfinder.com")
+conn.request("GET", search)
+
+resp = conn.getresponse()
+if resp.status != 200:
+    print("Server responded with error code %d." % (resp.status))
+    sys.exit(1)
+
+# Parse the result
+resblock = re.search('ListRes.*</table>', resp.read().decode('utf-8'), re.DOTALL)
+conn.close()
+rating = re.findall("[1-9]>\*{1,6}</td>", resblock.group())
+meaning = re.findall("[dw\"]>[A-Z][a-z]{2}.*</td><td", resblock.group())
+
+# Remove unnecessary chars
+for j in range(0, len(rating)):
+    rating[j] = re.search('\*{1,6}', rating[j]).group()
+
+for k in range(0, len(meaning)):
+    meaning[k] = re.search('[A-Z].*', meaning[k]).group()
+    meaning[k] = meaning[k].rstrip('</a></td><td')
+
+# Set the printing to max 10
+if len(rating) > 10:
+    anz=10
+else:
+    anz=len(rating)
+
+# Print the result
+print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))
+for i in range(0, anz):
+    print("%s \t %s" % (rating[i], meaning[i]))
