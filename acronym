@@ -31,31 +31,54 @@ conn = HTTPConnection("www.acronymfinder.com")
 conn.request("GET", search)
 
 resp = conn.getresponse()
-if resp.status != 200:
+if resp.status != 200 and resp.status != 301:
     print("Server responded with error code %d." % (resp.status))
     sys.exit(1)
 
-# Parse the result
-resblock = re.search('ListRes.*</table>', resp.read().decode('utf-8'), re.DOTALL)
+# Follow redirect if status == 301
+if resp.status == 301:
+    loc = resp.getheader('Location')
+    conn.close()
+    conn = HTTPConnection("www.acronymfinder.com")
+    conn.request("GET", loc)
+    resp = conn.getresponse()
+
+# Save response
+res = resp.read().decode('utf-8')
 conn.close()
-rating = re.findall("[1-9]>\*{1,6}</td>", resblock.group())
-meaning = re.findall("[dw\"]>[A-Z][a-z]{2}.*</td><td", resblock.group())
+
+# Parse the result
+resblock = re.search('ListRes.*</table>', res, re.DOTALL)
+
+if resblock:
+    rating = re.findall("[1-9]>\*{1,6}</td>", resblock.group())
+    meaning = re.findall("[dw\"]>[A-Z][a-z]{2}.*</td><td", resblock.group())
+else:
+    ressentence = re.search("1\.2em\">.*</h2>", res, re.DOTALL)
 
 # Remove unnecessary chars
-for j in range(0, len(rating)):
-    rating[j] = re.search('\*{1,6}', rating[j]).group()
+if resblock:
+    for j in range(0, len(rating)):
+        rating[j] = re.search('\*{1,6}', rating[j]).group()
 
-for k in range(0, len(meaning)):
-    meaning[k] = re.search('[A-Z].*', meaning[k]).group()
-    meaning[k] = meaning[k].rstrip('</a></td><td')
+    for k in range(0, len(meaning)):
+        meaning[k] = re.search('[A-Z].*', meaning[k]).group()
+        meaning[k] = meaning[k].rstrip('</a></td><td')
+else:
+    ressentence = re.search('[A-Z].*<', ressentence.group()).group()
+    ressentence = ressentence.rstrip('<')
 
 # Set the printing to max 10
-if len(rating) > 10:
-    anz=10
-else:
-    anz=len(rating)
+if resblock:
+    if len(rating) > 10:
+        anz=10
+    else:
+        anz=len(rating)
 
 # Print the result
 print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))
-for i in range(0, anz):
-    print("%s \t %s" % (rating[i], meaning[i]))
+if resblock:
+    for i in range(0, anz):
+        print("%s \t %s" % (rating[i], meaning[i]))
+else:
+    print(ressentence)
