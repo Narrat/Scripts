@@ -63,7 +63,8 @@ if resblock:
 
     for k in range(0, len(meaning)):
         meaning[k] = re.search('[A-Z].*', meaning[k]).group()
-        meaning[k] = meaning[k].rstrip('</a></td><td')
+        meaning[k] = meaning[k].replace('</a></td><td', '')
+        meaning[k] = meaning[k].replace('</td><td', '')
 else:
     ressentence = re.search('[A-Z].*<', ressentence.group()).group()
     ressentence = ressentence.rstrip('<')
