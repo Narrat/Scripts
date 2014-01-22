@@ -1,0 +1,6 @@
+ToDo and features to think about
+
+acronym:
+ * Possibility: Replace rsplit with re.sub?
+ * Possibility: Replace my "parsing" with Beautiful Soup? Extra dep
+ * Possibility: Change http.client with urllib2 or httplib2 for direct redirect (301) support? Extra dep in case of httplib2 which seems better
