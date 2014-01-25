@@ -4,3 +4,8 @@ acronym:
  * Possibility: Replace rsplit with re.sub?
  * Possibility: Replace my "parsing" with Beautiful Soup? Extra dep
  * Possibility: Change http.client with urllib2 or httplib2 for direct redirect (301) support? Extra dep in case of httplib2 which seems better
+ 
+ 
+ udict:
+  * Possibility: BeautifulSoup. Would it make extremly easy (Seach for content of <div class='word'> and <div class='definition'> and <div class='example'>)
+ * Examples parsing
