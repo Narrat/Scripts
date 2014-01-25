@@ -1,3 +1,9 @@
 acronym:
  * Darstellung: & wird zu &amp;
  * meaning = re.findall(...) fails for explanations with more than one upper-case in the first word (example: RTFW)
+
+udict:
+ * Darstellungsproblem wie bei acronym & , " (&quot) etc
+ * Improve Meaning parsing: Beginning with a lower-case chars fails to be detected
+ * Improve Meaning parsing: References to others words aren't filtered
+ * Improve Meaning parsing: other html-tags aren't filtered (example atta girl)
