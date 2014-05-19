@@ -5,37 +5,52 @@
 # Evtl mit Option wohin gesichert werden soll (USB-Stick, oder normaler Backup Ordner)
 # Momentane Probleme: Wenn ganze Ordner gesichert werden sollen, wie soll ich testen, ob einzelne Dateien 0 byte haben?
 
+# Which location am I executed from?
+HNAME=`hostname`
+
+if [ $HNAME == "Hekate" ]; then
+    echo 'Desktop'
+    BACKPATH="Backup/Comp/ArchDesk/"
+    FFPATH=".mozilla/firefox/bnvlq9xm.Crebiz/"
+elif [ $HNAME == "Persephone" ]; then
+    echo 'Laptop'
+    BACKPATH="Backup/Comp/ArchLap/"
+    FFPATH=".mozilla/firefox/p64cifs6.default/"
+else
+    echo 'Location nicht erkannt'
+fi
+
 # Paths:
-ffbook=".mozilla/firefox/bnvlq9xm.Crebiz/bookmarkbackups/bookmarks-$(date +%Y-%m-%d)*.json"
-ffback="Backup/Comp/ArchDesk/Browser/FFBookmarks.json"
+ffbook="${FFPATH}bookmarkbackups/bookmarks-$(date +%Y-%m-%d)*.json"
+ffback="${BACKPATH}Browser/FFBookmarks.json"
 
 canto=".canto-ng/conf"
-cantob="Backup/Comp/ArchDesk/Canto/conf"
+cantob="${BACKPATH}Canto/conf"
 
 dwb1=".config/dwb/settings"
-dwb1b="Backup/Comp/ArchDesk/dwb/settings"
+dwb1b="${BACKPATH}dwb/settings"
 dwb2=".config/dwb/keys"
-dwb2b="Backup/Comp/ArchDesk/dwb/keys"
+dwb2b="${BACKPATH}dwb/keys"
 dwb3=".config/dwb/searchengines"
-dwb3b="Backup/Comp/ArchDesk/dwb/searchengines"
+dwb3b="${BACKPATH}dwb/searchengines"
 dwb4=".config/dwb/default/bookmarks"
-dwb4b="Backup/Comp/ArchDesk/dwb/default/bookmarks"
+dwb4b="${BACKPATH}dwb/default/bookmarks"
 dwb5=".config/dwb/default/quickmarks"
-dwb5b="Backup/Comp/ArchDesk/dwb/default/quickmarks"
+dwb5b="${BACKPATH}dwb/default/quickmarks"
 
 conky1=".conkyscripts/conkyrc_basic"
-conky1b="Backup/Comp/ArchDesk/conkyscripts/conkyrc_basic"
+conky1b="${BACKPATH}conkyscripts/conkyrc_basic"
 conky2=".conkyscripts/conkyrc_port"
-conky2b="Backup/Comp/ArchDesk/conkyscripts/conkyrc_port"
+conky2b="${BACKPATH}conkyscripts/conkyrc_port"
 conky3=".conkyscripts/publicip.sh"
-conky3b="Backup/Comp/ArchDesk/conkyscripts/publicip.sh"
+conky3b="${BACKPATH}conkyscripts/publicip.sh"
 
 ob1=".config/openbox/rc.xml"
-ob1b="Backup/Comp/ArchDesk/Openbox/rc.xml"
+ob1b="${BACKPATH}Openbox/rc.xml"
 ob2=".config/openbox/menu.xml"
-ob2b="Backup/Comp/ArchDesk/Openbox/menu.xml"
+ob2b="${BACKPATH}Openbox/menu.xml"
 ob3=".config/openbox/autostart"
-ob3b="Backup/Comp/ArchDesk/Openbox/autostart"
+ob3b="${BACKPATH}Openbox/autostart"
 #----------------------
 # Backup md5
 md5BFF=$( md5sum ${ffback} | awk '{print $1}' )
