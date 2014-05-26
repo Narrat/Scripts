@@ -14,3 +14,5 @@ udict:
 	  File "./udict", line 50, in <module>
 	    meaning = re.findall("definition\'>\n[A-Z].*\n</div>", resblock.group())
 	AttributeError: 'NoneType' object has no attribute 'group'
+	---> Wrong assumption: Need to find new parsing elements. Page seems to be changed
+ * Error 302. Maybe search-URL changed
