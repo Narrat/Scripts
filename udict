@@ -45,16 +45,19 @@ res = resp.read().decode('utf-8')
 conn.close()
 
 # Parse the result
-resblock = re.search("cont.*>.*hidden-phone", res, re.DOTALL)
+resblock = re.search("id=\"cont.*>.*copyright", res, re.DOTALL)
 
-meaning = re.findall("definition\'>\n[A-Z].*\n</div>", resblock.group())
-example = re.findall("example\'>\n.*\n</div>", resblock.group())
+meaning = re.findall("meaning\">\n[A-Za-z].*?<div class=\"example", resblock.group(), re.DOTALL)
+#example = re.findall("example\'>\n.*\n</div>", resblock.group())
 
 # Remove unnecessary chars
 for k in range(0, len(meaning)):
-    meaning[k] = re.search("[A-Z].*[a-z]", meaning[k]).group()
-    #meaning[k] = meaning[k].replace('</a></td><td', '')
-    #meaning[k] = meaning[k].replace('</td><td', '')
+    meaning[k] = re.search("[A-Z].*[a-z]", meaning[k], re.DOTALL).group()
+    meaning[k] = meaning[k].replace('<br>', '   ')
+    meaning[k] = meaning[k].rstrip('</div>\n<div class="example')
+    meaning[k] = meaning[k].replace("<a href=\"", '( ')
+    meaning[k] = meaning[k].replace("\">", ' ) ')
+    meaning[k] = meaning[k].replace("</a>", '')
 
 #for j in range(0, len(example)):
 #    example[j] = re.search('', example[j]).group()
@@ -68,4 +71,4 @@ else:
 # Print the result
 print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%d:  %s" % (i+1, meaning[i]))
+    print("%d:  %s\n" % (i+1, meaning[i]))
