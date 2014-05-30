@@ -45,20 +45,21 @@ res = resp.read().decode('utf-8')
 conn.close()
 
 # Parse the result
-resblock = re.search("id=\"cont.*>.*copyright", res, re.DOTALL)
+resblock = re.search("id='cont.*>.*copyright", res, re.DOTALL)
 
-meaning = re.findall("meaning\">\n[A-Za-z].*?<div class=\"example", resblock.group(), re.DOTALL)
+meaning = re.findall("meaning'>\n[A-Za-z].*?<div class='example", resblock.group(), re.DOTALL)
 #example = re.findall("example\'>\n.*\n</div>", resblock.group())
 
 # Remove unnecessary chars
 for k in range(0, len(meaning)):
-    meaning[k] = meaning[k].lstrip("meaning\">\n")
-    meaning[k] = re.search("[A-Za-z].*[a-z]", meaning[k], re.DOTALL).group()
-    meaning[k] = meaning[k].replace('<br>', '    ')
-    meaning[k] = meaning[k].rstrip('</div>\n<div class="example')
+    meaning[k] = meaning[k].lstrip("meaning'>\n")
+    #meaning[k] = re.search("[A-Za-z].*[a-z]", meaning[k], re.DOTALL).group()
+    meaning[k] = meaning[k].replace('<br/>', '    ')
+    meaning[k] = meaning[k].rstrip('</div>\n<div class=\'example')
     meaning[k] = meaning[k].replace("<a href=\"", '( ')
     meaning[k] = meaning[k].replace("\">", ' ) ')
     meaning[k] = meaning[k].replace("</a>", '')
+    #meaning[k] = meaning[k].replace(str(re.search("<a href=\".*\">", meaning[k], re.DOTALL)), "")
 
 #for j in range(0, len(example)):
 #    example[j] = re.search('', example[j]).group()
