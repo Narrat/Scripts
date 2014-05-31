@@ -15,7 +15,35 @@ import sys
 import re
 from http.client import HTTPConnection
 
+def connecttoud(body):
+    verbindung = HTTPConnection("www.urbandictionary.com")
+    verbindung.request("GET", body)
+    
+    return verbindung
 
+# Check status code and follow redirections if necessary. Save entry
+def checkresponse(connection):
+    response = connection.getresponse()
+    
+    # Check status for redirection
+    if response.status == 302:
+        loc = response.getheader('Location')
+        connection.close()
+        connection = connecttoud(loc)
+        response = connection.getresponse()
+    
+    # Check if everything is OK
+    if response.status != 200:
+        print("Server responded with error code %d." % (response.status))
+        sys.exit(1)
+    
+    # Save response
+    responseentry = response.read().decode('utf-8')
+    connection.close()
+    
+    return responseentry
+
+# --- Main ---
 INPUT = sys.argv[1:]
 
 # If nothing is given in the command line; read from stdin.
@@ -31,26 +59,11 @@ INPUT = '+'.join(INPUT)
 # Create search url
 search = "/define.php?term="+INPUT
 
-# Connect to acronymfinder.com and request result.
-conn = HTTPConnection("www.urbandictionary.com")
-conn.request("GET", search)
+# Connect to page and request result.
+conn = connecttoud(search)
 
-resp = conn.getresponse()
-if resp.status != 200 and resp.status != 302:
-    print("Server responded with error code %d." % (resp.status))
-    sys.exit(1)
-
-# Follow redirect if status == 302
-if resp.status == 302:
-    loc = resp.getheader('Location')
-    conn.close()
-    conn = HTTPConnection("www.urbandictionary.com")
-    conn.request("GET", loc)
-    resp = conn.getresponse()
-
-# Save response
-res = resp.read().decode('utf-8')
-conn.close()
+# Check and get result
+res = checkresponse(conn)
 
 # Parse the result
 resblock = re.search("id='cont.*>.*copyright", res, re.DOTALL)
