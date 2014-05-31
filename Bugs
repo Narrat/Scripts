@@ -3,5 +3,4 @@ acronym:
  * meaning = re.findall(...) fails for explanations with more than one upper-case in the first word (example: RTFW)
 
 udict:
- * Darstellungsproblem wie bei acronym & , " (&quot) etc
  * Error 302: Redirection. Look after it and follow link (atta girl --> Attagirl; atta --> Atta)
