@@ -11,3 +11,5 @@ confback:
 udict:
   * Possibility: BeautifulSoup. Would it make extremly easy (Seach for content of <div class='word'> and <div class='definition'> and <div class='example'>)
  * Examples parsing
+ * Better handling of redirects: Current implementation doesn't really check the response of the new URL
+ * If there was a redirect: Print the relinked entry and not INPUT

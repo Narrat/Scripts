@@ -36,9 +36,17 @@ conn = HTTPConnection("www.urbandictionary.com")
 conn.request("GET", search)
 
 resp = conn.getresponse()
-if resp.status != 200:
+if resp.status != 200 and resp.status != 302:
     print("Server responded with error code %d." % (resp.status))
     sys.exit(1)
+
+# Follow redirect if status == 302
+if resp.status == 302:
+    loc = resp.getheader('Location')
+    conn.close()
+    conn = HTTPConnection("www.urbandictionary.com")
+    conn.request("GET", loc)
+    resp = conn.getresponse()
 
 # Save response
 res = resp.read().decode('utf-8')
