@@ -59,6 +59,7 @@ for k in range(0, len(meaning)):
     meaning[k] = meaning[k].replace("<a href=\"", '( ')
     meaning[k] = meaning[k].replace("\">", ' ) ')
     meaning[k] = meaning[k].replace("</a>", '')
+    meaning[k] = meaning[k].replace("\r", '')
     #meaning[k] = meaning[k].replace(str(re.search("<a href=\".*\">", meaning[k], re.DOTALL)), "")
 
 #for j in range(0, len(example)):
