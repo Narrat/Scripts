@@ -54,7 +54,7 @@ meaning = re.findall("meaning'>\n[A-Za-z].*?<div class='example", resblock.group
 for k in range(0, len(meaning)):
     meaning[k] = meaning[k].lstrip("meaning'>\n")
     #meaning[k] = re.search("[A-Za-z].*[a-z]", meaning[k], re.DOTALL).group()
-    meaning[k] = meaning[k].replace('<br/>', '    ')
+    meaning[k] = meaning[k].replace('<br/>', '\n    ')
     meaning[k] = meaning[k].rstrip('</div>\n<div class=\'example')
     meaning[k] = meaning[k].replace("<a href=\"", '( ')
     meaning[k] = meaning[k].replace("\">", ' ) ')
