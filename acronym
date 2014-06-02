@@ -15,7 +15,35 @@ import sys
 import re
 from http.client import HTTPConnection
 
+def connecttoaf(body):
+    verbindung = HTTPConnection("www.acronymfinder.com")
+    verbindung.request("GET", body)
+    
+    return verbindung
 
+# Check status code and follow redirections if necessary. Save entry
+def checkresponse(connection):
+    response = connection.getresponse()
+    
+    # Check status for redirection
+    if response.status == 301:
+        loc = response.getheader('Location')
+        connection.close()
+        connection = connecttoaf(loc)
+        response = connection.getresponse()
+    
+    # Check if everything is OK
+    if response.status != 200:
+        print("Server responded with error code %d." % (response.status))
+        sys.exit(1)
+    
+    # Save response
+    responseentry = response.read().decode('utf-8')
+    connection.close()
+    
+    return responseentry
+
+# --- Main ---
 ACRONYM = sys.argv[1]
 
 # If no acronym is given in the command line; read from stdin.
@@ -27,25 +55,10 @@ if len(ACRONYM) == 0:
 search = "/"+ACRONYM+".html"
 
 # Connect to acronymfinder.com and request result.
-conn = HTTPConnection("www.acronymfinder.com")
-conn.request("GET", search)
+conn = connecttoaf(search)
 
-resp = conn.getresponse()
-if resp.status != 200 and resp.status != 301:
-    print("Server responded with error code %d." % (resp.status))
-    sys.exit(1)
-
-# Follow redirect if status == 301
-if resp.status == 301:
-    loc = resp.getheader('Location')
-    conn.close()
-    conn = HTTPConnection("www.acronymfinder.com")
-    conn.request("GET", loc)
-    resp = conn.getresponse()
-
-# Save response
-res = resp.read().decode('utf-8')
-conn.close()
+# Check and get response
+res = checkresponse(conn)
 
 # Parse the result
 resblock = re.search('ListRes.*</table>', res, re.DOTALL)
