@@ -67,7 +67,7 @@ if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
     meaning = re.findall("- [A-Za-z].*?\">", resblock.group())
 else:
-    ressentence = re.search("1\.2em\">.*</h2>", res, re.DOTALL)
+    ressentence = re.search('- [A-Za-z].*?<', res, re.DOTALL)
 
 # Remove unnecessary chars
 if resblock:
@@ -75,8 +75,8 @@ if resblock:
         meaning[k] = meaning[k].replace('- ', '')
         meaning[k] = meaning[k].replace("\">", '')
 else:
-    ressentence = re.search('[A-Z].*<', ressentence.group()).group()
-    ressentence = ressentence.rstrip('<')
+    ressentence = ressentence.replace('- ', '')
+    ressentence = ressentence.replace('<', '')
 
 # Set the printing to max 10
 if resblock:
