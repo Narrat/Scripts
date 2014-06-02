@@ -64,16 +64,13 @@ res = checkresponse(conn)
 resblock = re.search('ListRes.*?</table>', res, re.DOTALL)
 
 if resblock:
-    rating = re.findall("[1-9]>\*{1,6}</td>", resblock.group())
+    rating = re.findall("\*{1,6}", resblock.group())
     meaning = re.findall("[dw\"]>[A-Z][a-z]{2}.*</td><td", resblock.group())
 else:
     ressentence = re.search("1\.2em\">.*</h2>", res, re.DOTALL)
 
 # Remove unnecessary chars
 if resblock:
-    for j in range(0, len(rating)):
-        rating[j] = re.search('\*{1,6}', rating[j]).group()
-
     for k in range(0, len(meaning)):
         meaning[k] = re.search('[A-Z].*', meaning[k]).group()
         meaning[k] = meaning[k].replace('</a></td><td', '')
