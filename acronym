@@ -65,16 +65,15 @@ resblock = re.search('ListRes.*?</table>', res, re.DOTALL)
 
 if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
-    meaning = re.findall("[dw\"]>[A-Z][a-z]{2}.*</td><td", resblock.group())
+    meaning = re.findall("- [A-Za-z].*?\">", resblock.group())
 else:
     ressentence = re.search("1\.2em\">.*</h2>", res, re.DOTALL)
 
 # Remove unnecessary chars
 if resblock:
     for k in range(0, len(meaning)):
-        meaning[k] = re.search('[A-Z].*', meaning[k]).group()
-        meaning[k] = meaning[k].replace('</a></td><td', '')
-        meaning[k] = meaning[k].replace('</td><td', '')
+        meaning[k] = meaning[k].replace('- ', '')
+        meaning[k] = meaning[k].replace("\">", '')
 else:
     ressentence = re.search('[A-Z].*<', ressentence.group()).group()
     ressentence = ressentence.rstrip('<')
