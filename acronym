@@ -61,7 +61,7 @@ conn = connecttoaf(search)
 res = checkresponse(conn)
 
 # Parse the result
-resblock = re.search('ListRes.*</table>', res, re.DOTALL)
+resblock = re.search('ListRes.*?</table>', res, re.DOTALL)
 
 if resblock:
     rating = re.findall("[1-9]>\*{1,6}</td>", resblock.group())
