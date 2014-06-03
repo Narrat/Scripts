@@ -24,9 +24,11 @@ if [ ! -f "$BACKFILE" ] ; then
 fi
 
 echo -e "Retrieving $HFILE from ${HFSERVER}\n"
-# DL-Variante überlegen. Curl, wget oder aria
-wget -O /tmp/$HFILE $HFSERVER/$HFILE
-#unzip -p /tmp/$HFILE | dos2unix > /tmp/$HFILE #not necessary
+# DL-Agents
+curl -o /tmp/$HFILE $HFSERVER/$HFILE
+#wget -O /tmp/$HFILE $HFSERVER/$HFILE
+#aria2c -o /tmp/$HFILE $HFSERVER/$HFILE
+
 if [ 'grep -c "banner" /tmp/hosts' ];then 
     echo "Downloaded and unpacked $HFILE OK"
     echo "Appending host list to original content"  # which was probably there for a reason, like to make sure localhost worked, and possibly even more stuff if part of a corporate LAN
