@@ -1,4 +1,3 @@
 acronym:
  * Darstellung: & wird zu &amp;
- * meaning = re.findall(...) fails for explanations with more than one upper-case in the first word (example: RTFW)
 
