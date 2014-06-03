@@ -1,17 +1,18 @@
 #!/bin/bash
 
-# Kleines Skript um ein bestimmtes PKGBuild per Subversion herunterzuladen, falls abs an sich noch nicht aktuell genug ist
-
+# Small script to get one specific PKGBUILD
+# with the help of the Arch subversion servers.
+# Useful if ABS got no update, or a [testing] PKGBuild is required.
 
 if [ $# -ne 2 ] ; then
-	echo "Usage: $0 Repo Paketname"
+	echo "Usage: $0 <repo> <package>"
 	exit $E_NO_ARGS
 fi
 
 PAKNAME=$2
 REPO=$1
 
-echo "Checke Server aus..."
+echo "Checking out server"
 if [ "$REPO" == "core" ] || [ "$REPO" == "extra" ] ; then
 	svn checkout --depth=empty svn://svn.archlinux.org/packages
 	cd packages
@@ -23,11 +24,11 @@ if [ "$REPO" == "com" ] || [ "$REPO" == "multi" ] ; then
 fi
 echo "...done"
 
-echo "Hole Paket..."
+echo "Get package"
 svn update $PAKNAME
 echo "...done"
 
-echo -e "\nVerschiebe Ordner"
+echo -e "\nMove folder"
 mv -v "$PAKNAME" "$HOME/Builds/ABS/_New/"
 cd ..
 if [ "$REPO" == "core" ] || [ "$REPO" == "extra" ] ; then
