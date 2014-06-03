@@ -45,3 +45,31 @@ if [ 'grep -c "banner" /tmp/hosts' ];then
 else
     echo "Update failed"
 fi
+
+#__________
+#On 2013-03-31 at 10:29 +0200, vermaden wrote:
+#> Hi all,I use 'static' 127.0.0.1 entries in /etc/hosts to block various
+#> things, like described here for
+#> example:http://someonewhocares.org/hosts/ Of course ZSH always tries
+#> to 'complete' the ssh/scp and always goes thru about 100 000 entries
+#> in my /etc/hosts file while the 'real' ones are about 100 maybe at
+#> most. My question is: Is there a way to 'tell' ZSH to NOT complete
+#> entries beginning with 127.0.0.1 from the /etc/hosts file?
+#> Regards,vermaden 
+#
+#Are you aware that the contents of /etc/hosts get loaded into _every_
+#process doing hostname resolution?  And the file isn't mmap'd in and so
+#shared, but is instead _read_ into each process, so is not shared
+#memory?
+#
+#Seriously, install unbound, use unbound-control and/or home-grown tools
+#to maintain the list of overrides, make sure the cost of filtering is
+#only borne once, instead of having zsh also load a 4MB hosts file and
+#parse it out.  Your system will be faster for _every_ hostname-resolving
+#package, not just zsh.
+#
+#Otherwise, use zstyle to set 'hosts':
+#
+#  zstyle ':completion:*:hosts' hosts $the_hosts_you_care_about
+#
+#and so override the automatic parsing of /etc/hosts.
