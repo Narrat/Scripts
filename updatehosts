@@ -1,17 +1,16 @@
 #!/bin/bash
-# OoD: Versuchen auf ne andere Hosts Seite umzuschreiben? Zu dem ändern des Updateszyklus (x lines sollen stehenbleiben, Rest weg und dann neues dazu)
-# Hosts file updater
-# You will probably need root or su rights to access /etc/hosts
-# modified by killermist with (what seem to be) some logical tweaks
 #
-# Debian users will need the package "sysutils" as this script uses dos2unix
-# $ apt-get install sysutils
-# hosts
+# Updater for Ad-block with hosts file
+# You will probably need root or su rights to access /etc/hosts
+#
+# Deps:
+# curl (or wget or aria2)
+#
+
 HFSERVER="http://someonewhocares.org/hosts/"
 HFILE="hosts"
 BACKFILE="/etc/hosts.back"
 
-clear
 echo "-------------------------------------------------------------"
 echo "This script will update your Hosts file to the latest version"
 echo "Your original Hosts file will be renamed to $BACKFILE"
@@ -20,7 +19,7 @@ echo ""
 
 if [ ! -f "$BACKFILE" ] ; then
   echo "Backing up your hosts file.." 
-  cp -v /etc/$HFILE $BACKFILE # Verbose copy file operation.
+  cp -v /etc/$HFILE $BACKFILE
 fi
 
 echo -e "Retrieving $HFILE from ${HFSERVER}\n"
@@ -31,14 +30,15 @@ curl -o /tmp/$HFILE $HFSERVER/$HFILE
 
 if [ 'grep -c "banner" /tmp/hosts' ];then 
     echo "Downloaded and unpacked $HFILE OK"
-    echo "Appending host list to original content"  # which was probably there for a reason, like to make sure localhost worked, and possibly even more stuff if part of a corporate LAN
-    #cp -f -u /tmp/hosts /etc/hosts
+    echo "Appending host list to original content"
     cat $BACKFILE >/etc/$HFILE
-    echo "" >>/etc/hosts # to make sure the original file ends in a new-line so that 2 entries don't end up on the same line, either causing unexpected behavior or not working at all
+    # to make sure the original file ends in a new-line
+    # so that 2 entries don't end up on the same line,
+    #either causing unexpected behavior or not working at all
+    echo "" >>/etc/hosts
     cat /tmp/$HFILE >>/etc/$HFILE
-    rm -fv /tmp/hosts*
-    echo "Update process complete"
-    #echo "-------------------------------------------------------------"
+    rm -fv /tmp/$HFILE
+    echo -e "Update process complete\n"
     echo "As a side-effect of this script, any changes you wish to make"
     echo "persistent in the hosts file should be made to $BACKFILE"
     echo "because /etc/hosts will be respawned from that file and the "
