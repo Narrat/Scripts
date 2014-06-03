@@ -67,7 +67,7 @@ if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
     meaning = re.findall("- [A-Za-z].*?\">", resblock.group())
 else:
-    ressentence = re.search('- [A-Za-z].*?<', res, re.DOTALL)
+    ressentence = re.search('- [A-Za-z].*?<', res, re.DOTALL).group()
 
 # Remove unnecessary chars
 if resblock:
