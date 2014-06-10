@@ -57,11 +57,8 @@ search = "/"+ACRONYM+".html"
 # Connect to acronymfinder.com and request result.
 conn = connecttoaf(search)
 
-# Check and get response
-res = checkresponse(conn)
-
-# Parse the result
-resblock = re.search('ListRes.*?</table>', res, re.DOTALL)
+# Check, get response and parse the result-table
+resblock = re.search('ListRes.*?</table>', checkresponse(conn), re.DOTALL)
 
 if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
