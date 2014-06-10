@@ -62,19 +62,12 @@ search = "/define.php?term="+INPUT
 # Connect to page and request result.
 conn = connecttoud(search)
 
-# Check and get result
-res = checkresponse(conn)
-
-# Parse the result
-resblock = re.search("id='cont.*>.*copyright", res, re.DOTALL)
-
-meaning = re.findall("meaning'>\n[A-Za-z].*?<div class='example", resblock.group(), re.DOTALL)
-#example = re.findall("example\'>\n.*\n</div>", resblock.group())
+# Check, get and parse the result
+meaning = re.findall("meaning'>\n[A-Za-z].*?<div class='example", checkresponse(conn), re.DOTALL)
 
 # Remove unnecessary chars
 for k in range(0, len(meaning)):
     meaning[k] = meaning[k].lstrip("meaning'>\n")
-    #meaning[k] = re.search("[A-Za-z].*[a-z]", meaning[k], re.DOTALL).group()
     meaning[k] = meaning[k].replace('<br/>', '\n    ')
     meaning[k] = meaning[k].rstrip('</div>\n<div class=\'example')
     meaning[k] = meaning[k].replace("<a href=\"/define.php?term=", '(UD: ')
@@ -85,9 +78,6 @@ for k in range(0, len(meaning)):
     meaning[k] = meaning[k].replace("&quot;", "\"") # latin-1 " into utf-8 "
     meaning[k] = meaning[k].replace("&amp;", "&")   # latin-1 & into utf-8 &
     #meaning[k] = meaning[k].replace(str(re.search("<a href=\".*\">", meaning[k], re.DOTALL)), "")
-
-#for j in range(0, len(example)):
-#    example[j] = re.search('', example[j]).group()
 
 # Set the printing to max 10
 if len(meaning) > 10:
