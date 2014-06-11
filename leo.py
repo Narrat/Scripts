@@ -48,8 +48,9 @@ def removechars(liste):
     for k in range(0, len(liste)):
         liste[k] = liste[k].replace("lang=\"de\">", '')
         liste[k] = liste[k].replace("lang=\"en\">", '')
-        liste[k] = liste[k].replace(" &nbsp;<small><i>", '; ')
-        liste[k] = liste[k].replace("</i></small>\n</td>", '')
+        liste[k] = liste[k].replace("<small><i>", '')
+        liste[k] = liste[k].replace("</i></small>", '')
+        liste[k] = liste[k].replace("\n</td>", '')
         liste[k] = liste[k].replace("</td>", '')
         liste[k] = liste[k].replace("<b>", '')
         liste[k] = liste[k].replace("</b>", '')
@@ -77,10 +78,10 @@ search = "/dictQuery/m-vocab/ende/de.html?searchLoc=0&lp=ende&lang=de&directN=0&
 conn = connecttoud(search)
 
 # Check, get result and parse it
-resblock = re.search("tbody>.*</tbody", rescheckresponse(conn), re.DOTALL)
+resblock = re.search("tbody>.*</tbody", checkresponse(conn), re.DOTALL)
 
-meaning = re.findall("lang=\"de\">[A-Za-z].*?</td>", resblocktestlauf.group(), re.DOTALL)
-meaning_en = re.findall("lang=\"en\">[A-Za-z].*?</td>", resblocktestlauf.group(), re.DOTALL)
+meaning = re.findall("lang=\"de\">[A-Za-z].*?</td>", resblock.group(), re.DOTALL)
+meaning_en = re.findall("lang=\"en\">[A-Za-z].*?</td>", resblock.group(), re.DOTALL)
 
 # Remove unnecessary chars
 meaning = removechars(meaning)
@@ -93,6 +94,6 @@ else:
     anz=len(meaning)
 
 # Print the result
-print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
+print("\n'%s' could stand for the following:\n\n   en\t|\tde" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%d:  %s\n" % (i+1, meaning[i]))
+    print("%d: %s\t|\t%s\n" % (i+1, meaning_en[i], meaning[i]))
