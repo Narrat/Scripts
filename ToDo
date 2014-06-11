@@ -6,5 +6,8 @@ acronym:
 confback:
  * Some configs are tracked via an own git repo (canto, conkyscripts, e.g.). Should they removed or remain as alternative backup system?
 
+leo:
+ * Add support for other languages of leo (ende = en-de; frde = fr-de)
+
 udict:
  * If there was a redirect: Print the relinked entry and not INPUT
