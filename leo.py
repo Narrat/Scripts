@@ -80,8 +80,8 @@ conn = connecttoud(search)
 # Check, get result and parse it
 resblock = re.search("tbody>.*</tbody", checkresponse(conn), re.DOTALL)
 
-meaning = re.findall("lang=\"de\">[A-Za-z].*?</td>", resblock.group(), re.DOTALL)
-meaning_en = re.findall("lang=\"en\">[A-Za-z].*?</td>", resblock.group(), re.DOTALL)
+meaning = re.findall("lang=\"de\">.*?</td>", resblock.group(), re.DOTALL)
+meaning_en = re.findall("lang=\"en\">.*?</td>", resblock.group(), re.DOTALL)
 
 # Remove unnecessary chars
 meaning = removechars(meaning)
