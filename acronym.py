@@ -62,9 +62,9 @@ resblock = re.search('ListRes.*?</table>', checkresponse(conn), re.DOTALL)
 
 if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
-    meaning = re.findall("- [A-Za-z].*?\">", resblock.group())
+    meaning = re.findall("- .*?\">", resblock.group())
 else:
-    ressentence = re.search('- [A-Za-z].*?<', res, re.DOTALL).group()
+    ressentence = re.search('- .*?<', res, re.DOTALL).group()
 
 # Remove unnecessary chars
 if resblock:

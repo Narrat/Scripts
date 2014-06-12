@@ -63,7 +63,7 @@ search = "/define.php?term="+INPUT
 conn = connecttoud(search)
 
 # Check, get and parse the result
-meaning = re.findall("meaning'>\n[A-Za-z].*?<div class='example", checkresponse(conn), re.DOTALL)
+meaning = re.findall("meaning'>\n.*?<div class='example", checkresponse(conn), re.DOTALL)
 
 # Remove unnecessary chars
 for k in range(0, len(meaning)):
