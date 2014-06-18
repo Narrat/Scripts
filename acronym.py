@@ -18,29 +18,29 @@ from http.client import HTTPConnection
 def connecttoaf(body):
     verbindung = HTTPConnection("www.acronymfinder.com")
     verbindung.request("GET", body)
-    
+
     return verbindung
 
 # Check status code and follow redirections if necessary. Save entry
 def checkresponse(connection):
     response = connection.getresponse()
-    
+
     # Check status for redirection
     if response.status == 301:
         loc = response.getheader('Location')
         connection.close()
         connection = connecttoaf(loc)
         response = connection.getresponse()
-    
+
     # Check if everything is OK
     if response.status != 200:
         print("Server responded with error code %d." % (response.status))
         sys.exit(1)
-    
+
     # Save response
     responseentry = response.read().decode('utf-8')
     connection.close()
-    
+
     return responseentry
 
 # --- Main ---
@@ -79,9 +79,9 @@ else:
 # Set the printing to max 10
 if resblock:
     if len(rating) > 10:
-        anz=10
+        anz = 10
     else:
-        anz=len(rating)
+        anz = len(rating)
 
 # Print the result
 print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))

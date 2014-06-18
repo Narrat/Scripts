@@ -18,36 +18,36 @@ from http.client import HTTPConnection
 def connecttoud(body):
     verbindung = HTTPConnection("www.urbandictionary.com")
     verbindung.request("GET", body)
-    
+
     return verbindung
 
 # Check status code and follow redirections if necessary. Save entry
 def checkresponse(connection):
     response = connection.getresponse()
-    
+
     # Check status for redirection
     if response.status == 302:
         loc = response.getheader('Location')
         connection.close()
         connection = connecttoud(loc)
         response = connection.getresponse()
-    
+
     # Check if everything is OK
     if response.status != 200:
         print("Server responded with error code %d." % (response.status))
         sys.exit(1)
-    
+
     # Save response
     responseentry = response.read().decode('utf-8')
     connection.close()
-    
+
     return responseentry
 
 # --- Main ---
 INPUT = sys.argv[1:]
 
 # If nothing is given in the command line; read from stdin.
-if len(INPUT)==0:
+if len(INPUT) == 0:
     for line in sys.stdin:
         INPUT += line.split()
 
@@ -81,9 +81,9 @@ for k in range(0, len(meaning)):
 
 # Set the printing to max 10
 if len(meaning) > 10:
-    anz=10
+    anz = 10
 else:
-    anz=len(meaning)
+    anz = len(meaning)
 
 # Print the result
 print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
