@@ -58,7 +58,8 @@ search = "/"+ACRONYM+".html"
 conn = connecttoaf(search)
 
 # Check, get response and parse the result-table
-resblock = re.search('ListRes.*?</table>', checkresponse(conn), re.DOTALL)
+res = checkresponse(conn)
+resblock = re.search('ListRes.*?</table>', res, re.DOTALL)
 
 if resblock:
     rating = re.findall("\*{1,6}", resblock.group())
