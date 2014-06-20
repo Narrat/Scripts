@@ -3,45 +3,10 @@
 # leo -- Look something up on
 # leo.org
 #
-#
-#
-#
-#
-#
-#
-#
 
 import sys
 import re
-from http.client import HTTPConnection
-
-def connecttoud(body):
-    verbindung = HTTPConnection("dict.leo.org")
-    verbindung.request("GET", body)
-
-    return verbindung
-
-# Check status code and follow redirections if necessary. Save entry
-def checkresponse(connection):
-    response = connection.getresponse()
-
-    # Check status for redirection
-    if response.status == 302:
-        loc = response.getheader('Location')
-        connection.close()
-        connection = connecttoud(loc)
-        response = connection.getresponse()
-
-    # Check if everything is OK
-    if response.status != 200:
-        print("Server responded with error code %d." % (response.status))
-        sys.exit(1)
-
-    # Save response
-    responseentry = response.read().decode('utf-8')
-    connection.close()
-
-    return responseentry
+from lib.py import geturl
 
 # Remove unnecessary chars
 def removechars(liste):
@@ -75,10 +40,11 @@ INPUT = '+'.join(INPUT)
 search = "/dictQuery/m-vocab/ende/de.html?searchLoc=0&lp=ende&lang=de&directN=0&search="+INPUT+"&resultOrder=basic&multiwordShowSingle=on"
 
 # Connect to page and request result.
-conn = connecttoud(search)
+url = "dict.leo.org"
+conn = geturl.connectto(url, search)
 
 # Check, get result and parse it
-resblock = re.search("tbody>.*</tbody", checkresponse(conn), re.DOTALL)
+resblock = re.search("tbody>.*</tbody", geturl.checkresponse(conn, url), re.DOTALL)
 
 meaning = re.findall("lang=\"de\">.*?</td>", resblock.group(), re.DOTALL)
 meaning_en = re.findall("lang=\"en\">.*?</td>", resblock.group(), re.DOTALL)
