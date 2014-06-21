@@ -2,6 +2,8 @@
 #
 # acronym -- Look for acronyms on acronymfinder.com
 #
+# Dep: local lib: geturl.py
+#
 
 import sys
 import re

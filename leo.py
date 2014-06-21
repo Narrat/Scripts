@@ -3,6 +3,8 @@
 # leo -- Look something up on
 # leo.org
 #
+# Dep: local lib: geturl.py
+#
 
 import sys
 import re

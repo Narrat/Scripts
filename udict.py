@@ -3,6 +3,8 @@
 # udict -- Look something up on
 # urbandictionary.com
 #
+# Dep: local lib: geturl.py
+#
 
 import sys
 import re
