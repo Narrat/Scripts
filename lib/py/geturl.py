@@ -1,17 +1,19 @@
-# Various functions
-# connectto: Establish a connection and send body
-# checkresponse: Check response status, follow a redirect if necessary and save the response
+# Needed by acronym.py, leo.py, udict.py
 
 from http.client import HTTPConnection
 
 def connectto(url, body):
+    """Connect to url and request a GET with given body.
+    Return Connection"""
     verbindung = HTTPConnection(url)
     verbindung.request("GET", body)
 
     return verbindung
 
-# Check status code and follow redirections if necessary. Save entry
 def checkresponse(connection, url):
+    """Check given connection if there is a redirect.
+    If so: Get Location header and establish a new connection with url and the new body.
+    Check if reponse is ok,  decode the response and return it"""
     response = connection.getresponse()
 
     # Check status for redirection
