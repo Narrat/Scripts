@@ -28,8 +28,8 @@ def checkresponse(connection, url):
         print("Server responded with error code %d." % (response.status))
         sys.exit(1)
 
-    # Save response. Standard http transfer enc is latin1. So decode is defined
-    responseentry = response.read().decode('latin1')
+    # Save response
+    responseentry = response.read().decode('utf8')
     connection.close()
 
     return responseentry
