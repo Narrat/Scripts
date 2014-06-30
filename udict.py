@@ -10,12 +10,12 @@ import sys
 import re
 from lib.py import geturl
 
-INPUT = sys.argv[1:]
+# If nothing is given in the command line; exit
+if len(sys.argv) < 2:
+    print("Usage: udict WORD")
+    sys.exit(1)
 
-# If nothing is given in the command line; read from stdin.
-if len(INPUT) == 0:
-    for line in sys.stdin:
-        INPUT += line.split()
+INPUT = sys.argv[1:]
 
 # Convert list to str
 # and if more than one word is given

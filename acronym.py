@@ -9,12 +9,12 @@ import sys
 import re
 from lib.py import geturl
 
-ACRONYM = sys.argv[1]
+# If no acronym is given in the command line; exit
+if len(sys.argv) < 2:
+    print("Usage: acronym ACRONYM")
+    sys.exit(1)
 
-# If no acronym is given in the command line; read from stdin.
-if len(ACRONYM) == 0:
-    for line in sys.stdin:
-        ACRONYM += line.split()
+ACRONYM = sys.argv[1]
 
 # Create search url
 search = "/"+ACRONYM+".html"
