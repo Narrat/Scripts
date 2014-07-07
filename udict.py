@@ -55,4 +55,4 @@ else:
 # Print the result
 print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%d:  %s\n" % (i+1, meaning[i]))
+    print("%2d:  %s\n" % (i+1, meaning[i]))

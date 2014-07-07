@@ -64,4 +64,4 @@ else:
 # Print the result
 print("\n'%s' could stand for the following:\n\n   en\t|\tde" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%d: %s\t|\t%s" % (i+1, meaning_en[i], meaning[i]))
+    print("%2d: %s\t|\t%s" % (i+1, meaning_en[i], meaning[i]))

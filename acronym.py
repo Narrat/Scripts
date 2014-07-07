@@ -55,4 +55,4 @@ if resblock:
     for i in range(0, anz):
         print("%s \t %s" % (rating[i], meaning[i]))
 else:
-    print(ressentence)
+    print("\t"+ressentence)
