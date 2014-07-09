@@ -62,6 +62,6 @@ else:
     anz = len(meaning)
 
 # Print the result
-print("\n'%s' could stand for the following:\n\n   en\t|\tde" % (INPUT.replace('+', ' ')))
+print("\n'%s' could stand for the following:\n\n\t\t\t\ten | de" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%2d: %s\t|\t%s" % (i+1, meaning_en[i], meaning[i]))
+    print("%2d: %30s | %s" % (i+1, meaning_en[i], meaning[i]))
