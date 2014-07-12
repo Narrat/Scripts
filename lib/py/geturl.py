@@ -1,5 +1,6 @@
 # Needed by acronym.py, leo.py, udict.py
 
+import sys
 from http.client import HTTPConnection
 
 def connectto(url, body):
