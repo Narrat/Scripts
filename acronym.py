@@ -25,16 +25,19 @@ conn = geturl.connectto(url, search)
 
 # Check, get response and parse the result-table
 res = geturl.checkresponse(conn, url)
-resblock = re.search('ListResults>.*?</table>', res, re.DOTALL)
+resblock = re.search("search-sort\">.*?</table>", res, re.DOTALL)
 
 if resblock:
-    rating = re.findall("\*{1,6}", resblock.group())
+    rating = re.findall("s=r[0-5]", resblock.group())
     meaning = re.findall("- .*?\">", resblock.group())
 else:
     ressentence = re.search('- .*?<', res, re.DOTALL).group()
 
 # Remove unnecessary chars
 if resblock:
+    for j in range(0, len(rating)):
+        rating[j] = rating[j].replace('s=r', '')
+
     for k in range(0, len(meaning)):
         meaning[k] = meaning[k].replace('- ', '')
         meaning[k] = meaning[k].replace("\">", '')
@@ -53,6 +56,6 @@ if resblock:
 print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))
 if resblock:
     for i in range(0, anz):
-        print("%s \t %s" % (rating[i], meaning[i]))
+        print("%s \t %s" %('*'*int(rating[i]), meaning[i]))
 else:
     print("\t"+ressentence)
