@@ -9,8 +9,8 @@ if [[ $EUID -ne 0 ]]; then
    exit 1;
 fi
 
-pacman -Rdds --noconfirm nouveau-dri xf86-video-nouveau mesa-libgl #lib32-nouveau-dri lib32-mesa-libgl
-pacman -S --noconfirm nvidia-lts nvidia-utils #lib32-nvidia-utils, nvidia{,-utils}
+pacman -Rdds --noconfirm mesa-dri xf86-video-nouveau mesa-libgl #lib32-nouveau-dri lib32-mesa-libgl
+pacman -S --noconfirm nvidia-340xx-lts nvidia-340xx-utils #lib32-nvidia-utils, nvidia{,-utils}
 
 # If Early-KMS is used
 #sed -i 's/MODULES="nouveau"/#MODULES="nouveau"/' /etc/mkinitcpio.conf
