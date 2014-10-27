@@ -2,12 +2,19 @@
 
 import sys
 from http.client import HTTPConnection
+from http.client import HTTPSConnection
 
 def connectto(url, body):
     """Connect to url and request a GET with given body.
     Return Connection"""
-    verbindung = HTTPConnection(url)
-    verbindung.request("GET", body)
+    verbindung = HTTPSConnection(url)
+    try:
+        verbindung.request("GET", body)
+    except:
+        print("No SSL. Falling back...")
+        verbindung.close()
+        verbindung = HTTPConnection(url)
+        verbindung.request("GET", body)
 
     return verbindung
 
