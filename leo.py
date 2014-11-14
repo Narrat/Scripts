@@ -9,6 +9,7 @@
 import sys
 import re
 from lib.py import geturl
+from urllib.parse import quote
 
 # Remove unnecessary chars
 def removechars(liste):
@@ -38,8 +39,8 @@ INPUT = sys.argv[1:]
 # they're joined with a +
 INPUT = '+'.join(INPUT)
 
-# Create search url (ende)
-search = "/dictQuery/m-vocab/ende/de.html?searchLoc=0&lp=ende&lang=de&directN=0&search="+INPUT+"&resultOrder=basic&multiwordShowSingle=on"
+# Encode INPUT to URL compatible ASCII and create search url (ende)
+search = "/dictQuery/m-vocab/ende/de.html?searchLoc=0&lp=ende&lang=de&directN=0&search="+quote(INPUT)+"&resultOrder=basic&multiwordShowSingle=on"
 
 # Connect to page and request result.
 url = "dict.leo.org"
