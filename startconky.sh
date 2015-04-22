@@ -1,17 +1,28 @@
 #!/bin/bash
-#conky -c ~/.conkyscripts/.conkyrc_basic;
-#conky -c ~/.conkyscripts/.conkyrc_port;
-#echo Start: $(date) >> IP
-#wget http://checkip.dyndns.org/ -q -O - |
-#grep -Eo '\<[[:digit:]]{1,3}(\.[[:digit:]]{1,3}){3}\>' >> IP
-#sleep 5 &&
-#xmms2-launcher
-#echo Starte Canto-Daemon...
-#canto-daemon &
-#echo ...done
-sleep 5 &&
-echo Starte Conky-Skripte...
-conky -c ~/.conkyscripts/conkyrc_basic -q &
-sleep 10 &&
-conky -c ~/.conkyscripts/conkyrc_port -q &
-echo ...done
+
+if [ $# -ne 1 ] ; then
+    echo "Usage: $0 ScriptIdentifier"
+    echo -e "\tdefault: Default conkyrc"
+    echo -e "\tclock: Big clock"
+    echo -e "\tclock2: Big clock on right side"
+    echo -e "\told: old and deprecated conkyrc (first one)"
+    exit $E_NO_ARGS
+fi
+
+input=$1
+conkyrc=("basic.conkyrc" "big_clock.conkyrc" "big_clock.conkyrc" "conkyrc_basic" "conkyrc_port")
+
+case "$input" in
+  default)  index=0 ; scriptcount=1 ;;
+  clock)    index=1 ; scriptcount=1 ;;
+  clock2)   index=2 ; scriptcount=1 ;;
+  old)      index=3 ; scriptcount=2 ;;
+esac
+
+echo "Starte Conky-Skripte..."
+for i in $(seq 1 ${scriptcount});
+do
+    conky -c ~/.conkyscripts/${conkyrc[index]} -q &
+    index=$((${index}+1))
+done
+echo "...done"
