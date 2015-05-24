@@ -75,8 +75,8 @@ then
                 rm -r "${INPUT}"
             fi
             git commit -m "${INPUT}: Maintained on AUR, replaced by subtree"
-            git remote add ${INPUT}-aur "${AUR4DIR}/${INPUT}"
         fi
+        git remote add ${INPUT}-aur "${AUR4DIR}/${INPUT}"
         git subtree add --prefix="$INPUT" "${INPUT}-aur" master
     fi
 else
