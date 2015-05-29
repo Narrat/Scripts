@@ -8,6 +8,8 @@
 
 import sys
 import re
+from shutil import get_terminal_size
+from textwrap import wrap
 from lib.py import geturl
 from urllib.parse import quote
 
@@ -16,8 +18,10 @@ def removechars(liste):
     for k in range(0, len(liste)):
         liste[k] = liste[k].replace("lang=\"de\">", '')
         liste[k] = liste[k].replace("lang=\"en\">", '')
-        liste[k] = liste[k].replace("<small><i>", '')
-        liste[k] = liste[k].replace("</i></small>", '')
+        liste[k] = liste[k].replace("<small>", '')
+        liste[k] = liste[k].replace("</small>", '')
+        liste[k] = liste[k].replace("<i>", '')
+        liste[k] = liste[k].replace("</i>", '')
         liste[k] = liste[k].replace("\n</td>", '')
         liste[k] = liste[k].replace("</td>", '')
         liste[k] = liste[k].replace("<b>", '')
@@ -63,6 +67,10 @@ else:
     anz = len(meaning)
 
 # Print the result
-print("\n'%s' could stand for the following:\n\n\t\t\t\ten | de" % (INPUT.replace('+', ' ')))
+term_col = get_terminal_size().columns
+print("\n'%s' could stand for the following:\n\n" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%2d: %30s | %s" % (i+1, meaning_en[i], meaning[i]))
+    meaning_wrap = wrap(meaning[i], width=term_col-10)
+    meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
+    print("{0:2d}: ".format(i+1), end="")
+    print("\n\t \u25ba ".join("%s\n    \u25ba\u25ba %s" % t for t in zip(meaning_wrap,meaning_en_wrap)))
