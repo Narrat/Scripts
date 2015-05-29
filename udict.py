@@ -8,6 +8,8 @@
 
 import sys
 import re
+from shutil import get_terminal_size
+from textwrap import wrap
 from lib.py import geturl
 
 # If nothing is given in the command line; exit
@@ -53,6 +55,9 @@ else:
     anz = len(meaning)
 
 # Print the result
+term_col = get_terminal_size().columns
 print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
-    print("%2d:  %s\n" % (i+1, meaning[i]))
+    sentence = "%2d:  %s\n" % (i+1, meaning[i])
+    sentencewrap = wrap(sentence, width=term_col-10)
+    print("\n   \u25ba ".join(sentencewrap))
