@@ -7,7 +7,10 @@
 
 import sys
 import re
+from shutil import get_terminal_size
+from textwrap import wrap
 from lib.py import geturl
+# import lib.py as urlhandler # else the lib.py must be added in front of every call
 
 # If no acronym is given in the command line; exit
 if len(sys.argv) < 2:
@@ -52,10 +55,15 @@ if resblock:
     else:
         anz = len(rating)
 
+# Get terminal column size for wrapping text
+term_col = get_terminal_size().columns
+
 # Print the result
 print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))
 if resblock:
     for i in range(0, anz):
-        print("%s \t %s" %('*'*int(rating[i]), meaning[i]))
+        sentence = "%s \t %s" %('*'*int(rating[i]), meaning[i])
+        sentencewrap = wrap(sentence, width=term_col-10)
+        print("\n\t \u25ba ".join(sentencewrap))
 else:
     print("\t"+ressentence)
