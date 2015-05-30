@@ -8,7 +8,7 @@
 #
 
 DMENU='dmenu -i -b'
-menitem=$(echo -e "ALSA\nBPython\nCDW\nGnuplot\nJulia\nMC\nOctave\nSmuxi-STFL\nViFM\nXmms2" | $DMENU)
+menitem=$(echo -e "ALSA\nBPython\nCDW\nGnuplot\nJulia\nOctave\nSmuxi-STFL\nViFM\nXmms2" | $DMENU)
 
 case "$menitem" in
   ALSA)         roxterm --role=audio -p Black -T ALSA -e alsamixer ;;
@@ -16,7 +16,6 @@ case "$menitem" in
   CDW)          roxterm --role=cdw --geometry=110x45 -p Black -T cdw -e /usr/bin/cdw ;;
   Gnuplot)      roxterm --role=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
   Julia)        roxterm --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
-  MC)           roxterm --role=FileMan --geometry=110x45 -p Black -T Midnight-Commander -e mc ;;
   Octave)       roxterm --role=Science -d ${HOME}/Octave --title=Octave -e octave ;;
   Smuxi-STFL)   roxterm --role=Smuxi --geometry=110x45 -p Black -T Smuxi-STFL -e smuxi-frontend-stfl ;;
   ViFM)         roxterm --role=FileMan --geometry=110x45 -p Black -T ViFM -e vifm ;;
