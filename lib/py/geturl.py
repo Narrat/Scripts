@@ -23,21 +23,23 @@ def checkresponse(connection, url):
     If so: Get Location header and establish a new connection with url and the new body.
     Check if reponse is ok,  decode the response and return it"""
     response = connection.getresponse()
+    resp_status = response.status
 
     # Check status for redirection
-    if response.status == 301 or response.status == 302:
+    if resp_status == 301 or resp_status == 302:
         loc = response.getheader('Location')
         connection.close()
         connection = connectto(url, loc)
         response = connection.getresponse()
+        resp_status = response.status
 
     # Check if everything is OK
-    if response.status != 200:
-        print("Server responded with error code %d." % (response.status))
+    if resp_status != 200 and resp_status != 404:
+        print("Server responded with error code {}.".format(resp_status))
         sys.exit(1)
 
     # Save response
     responseentry = response.read().decode('utf8')
     connection.close()
 
-    return responseentry
+    return responseentry, resp_status

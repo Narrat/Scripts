@@ -32,7 +32,8 @@ url = "www.urbandictionary.com"
 conn = geturl.connectto(url, search)
 
 # Check, get and parse the result
-meaning = re.findall("meaning'>\n.*?<div class='example", geturl.checkresponse(conn, url), re.DOTALL)
+res, status = geturl.checkresponse(conn, url)
+meaning = re.findall("meaning'>\n.*?<div class='example", res, re.DOTALL)
 
 # Remove unnecessary chars
 for k in range(0, len(meaning)):

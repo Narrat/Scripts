@@ -27,7 +27,7 @@ url = "www.acronymfinder.com"
 conn = geturl.connectto(url, search)
 
 # Check, get response and parse the result-table
-res = geturl.checkresponse(conn, url)
+res, status = geturl.checkresponse(conn, url)
 resblock = re.search("search-sort\">.*?</table>", res, re.DOTALL)
 
 if resblock:

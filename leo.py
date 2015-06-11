@@ -51,26 +51,35 @@ url = "dict.leo.org"
 conn = geturl.connectto(url, search)
 
 # Check, get result and parse it
-resblock = re.search("tbody>.*</tbody", geturl.checkresponse(conn, url), re.DOTALL)
-
-meaning = re.findall("lang=\"de\">.*?</td>", resblock.group(), re.DOTALL)
-meaning_en = re.findall("lang=\"en\">.*?</td>", resblock.group(), re.DOTALL)
-
-# Remove unnecessary chars
-meaning = removechars(meaning)
-meaning_en = removechars(meaning_en)
-
-# Set the printing to max 10
-if len(meaning) > 10:
-    anz = 10
+res, status = geturl.checkresponse(conn, url)
+if status == 404:
+    resblock = re.search("<div class.*</tr></tbody>", res, re.DOTALL)
+    possible = re.findall("link\">.*?/span>", resblock.group())
+    possible = list(set(possible)) # Get rid of duplicates
+    print("\n'%s' couldn't be found.\nDid you mean one of the following?\n" % (INPUT.replace('+', ' ')))
+    for i in range(0, len(possible)):
+        print("  \u00bb{}".format(possible[i][6:-7]))
 else:
-    anz = len(meaning)
+    resblock = re.search("tbody>.*</tbody", res, re.DOTALL)
 
-# Print the result
-term_col = get_terminal_size().columns
-print("\n'%s' could stand for the following:\n\n" % (INPUT.replace('+', ' ')))
-for i in range(0, anz):
-    meaning_wrap = wrap(meaning[i], width=term_col-10)
-    meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
-    print("{0:2d}: ".format(i+1), end="")
-    print("\n\t \u25ba ".join("%s\n    \u25ba\u25ba %s" % t for t in zip(meaning_wrap,meaning_en_wrap)))
+    meaning = re.findall("lang=\"de\">.*?</td>", resblock.group(), re.DOTALL)
+    meaning_en = re.findall("lang=\"en\">.*?</td>", resblock.group(), re.DOTALL)
+
+    # Remove unnecessary chars
+    meaning = removechars(meaning)
+    meaning_en = removechars(meaning_en)
+
+    # Set the printing to max 10
+    if len(meaning) > 10:
+        anz = 10
+    else:
+        anz = len(meaning)
+
+    # Print the result
+    term_col = get_terminal_size().columns
+    print("\n'%s' could stand for the following:\n" % (INPUT.replace('+', ' ')))
+    for i in range(0, anz):
+        meaning_wrap = wrap(meaning[i], width=term_col-10)
+        meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
+        print("{0:2d}: ".format(i+1), end="")
+        print("\n\t \u25ba ".join("%s\n    \u25ba\u25ba %s" % t for t in zip(meaning_wrap,meaning_en_wrap)))
