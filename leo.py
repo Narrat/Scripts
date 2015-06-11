@@ -81,5 +81,7 @@ else:
     for i in range(0, anz):
         meaning_wrap = wrap(meaning[i], width=term_col-10)
         meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
-        print("{0:2d}: ".format(i+1), end="")
-        print("\n\t \u25ba ".join("%s\n    \u25ba\u25ba %s" % t for t in zip(meaning_wrap,meaning_en_wrap)))
+        print("{0:2d}: \u25c4\u25c4 ".format(i+1), end="")
+        print("\n    \u21b3 ".join(meaning_wrap))
+        print("    \u25ba\u25ba ", end="")
+        print("\n    \u21b3 ".join(meaning_en_wrap))

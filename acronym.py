@@ -64,6 +64,6 @@ if resblock:
     for i in range(0, anz):
         sentence = "%s \t %s" %('*'*int(rating[i]), meaning[i])
         sentencewrap = wrap(sentence, width=term_col-10)
-        print("\n\t \u25ba ".join(sentencewrap))
+        print("\n\t \u21b3 ".join(sentencewrap))
 else:
     print("\t"+ressentence)

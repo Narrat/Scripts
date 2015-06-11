@@ -61,4 +61,4 @@ print("\n'%s' is used as followed:\n" % (INPUT.replace('+', ' ')))
 for i in range(0, anz):
     sentence = "%2d:  %s\n" % (i+1, meaning[i])
     sentencewrap = wrap(sentence, width=term_col-10)
-    print("\n   \u25ba ".join(sentencewrap))
+    print("\n   \u21b3 ".join(sentencewrap))
