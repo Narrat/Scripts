@@ -12,6 +12,18 @@ from textwrap import wrap
 from lib.py import geturl
 # import lib.py as urlhandler # else the lib.py must be added in front of every call
 
+# Remove unnecessary chars
+def removechars(liste):
+    for k in range(0, len(liste)):
+        liste[k] = liste[k].replace('s=r', '')
+        liste[k] = liste[k].replace('- ', '')
+        liste[k] = liste[k].replace("\">", '')
+        liste[k] = liste[k].replace('<', '')
+        liste[k] = liste[k].replace("&#39;", "'")
+        liste[k] = liste[k].replace("&amp;", "&")
+
+    return liste
+
 # If no acronym is given in the command line; exit
 if len(sys.argv) < 2:
     print("Usage: acronym ACRONYM")
@@ -34,36 +46,28 @@ if resblock:
     rating = re.findall("s=r[0-5]", resblock.group())
     meaning = re.findall("- .*?\">", resblock.group())
 else:
-    ressentence = re.search('- .*?<', res, re.DOTALL).group()
+    ressentence = [re.search('- .*?<', res, re.DOTALL).group(),]
 
 # Remove unnecessary chars
 if resblock:
-    for j in range(0, len(rating)):
-        rating[j] = rating[j].replace('s=r', '')
-
-    for k in range(0, len(meaning)):
-        meaning[k] = meaning[k].replace('- ', '')
-        meaning[k] = meaning[k].replace("\">", '')
+    rating = removechars(rating)
+    meaning = removechars(meaning)
 else:
-    ressentence = ressentence.replace('- ', '')
-    ressentence = ressentence.replace('<', '')
+    ressentence = removechars(ressentence)
 
 # Set the printing to max 10
 if resblock:
-    if len(rating) > 10:
-        anz = 10
-    else:
-        anz = len(rating)
+    anz = 10 if len(rating) > 10 else len(rating)
 
 # Get terminal column size for wrapping text
 term_col = get_terminal_size().columns
 
 # Print the result
-print("\nThe acronym '%s' could stand for:\n" % (ACRONYM))
+print("\nThe acronym '{}' could stand for:\n".format(ACRONYM))
 if resblock:
     for i in range(0, anz):
-        sentence = "%s \t %s" %('*'*int(rating[i]), meaning[i])
+        sentence = "{0} \t {1}".format('*'*int(rating[i]), meaning[i])
         sentencewrap = wrap(sentence, width=term_col-10)
         print("\n\t \u21b3 ".join(sentencewrap))
 else:
-    print("\t"+ressentence)
+    print("\t"+ressentence[0])

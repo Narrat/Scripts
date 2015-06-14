@@ -16,17 +16,17 @@ from urllib.parse import quote
 # Remove unnecessary chars
 def removechars(liste):
     for k in range(0, len(liste)):
-        liste[k] = liste[k].replace("lang=\"de\">", '')
-        liste[k] = liste[k].replace("lang=\"en\">", '')
+        liste[k] = liste[k].replace("\n", '')
+        liste[k] = liste[k].replace(str(re.search("lang=.*?>", liste[k]).group()), '')
         liste[k] = liste[k].replace("<small>", '')
         liste[k] = liste[k].replace("</small>", '')
         liste[k] = liste[k].replace("<i>", '')
         liste[k] = liste[k].replace("</i>", '')
-        liste[k] = liste[k].replace("\n</td>", '')
         liste[k] = liste[k].replace("</td>", '')
         liste[k] = liste[k].replace("<b>", '')
         liste[k] = liste[k].replace("</b>", '')
-        liste[k] = liste[k].replace("\n", '')
+        liste[k] = liste[k].replace("<sup>", '(')
+        liste[k] = liste[k].replace("</sup>", ')')
 
     return liste
 
@@ -56,9 +56,9 @@ if status == 404:
     resblock = re.search("<div class.*</tr></tbody>", res, re.DOTALL)
     possible = re.findall("link\">.*?/span>", resblock.group())
     possible = list(set(possible)) # Get rid of duplicates
-    print("\n'%s' couldn't be found.\nDid you mean one of the following?\n" % (INPUT.replace('+', ' ')))
+    print("\n'{}' couldn't be found.\nDid you mean one of the following?\n".format(INPUT.replace('+', ' ')))
     for i in range(0, len(possible)):
-        print("  \u00bb{}".format(possible[i][6:-7]))
+        print("  \u00bb {}".format(possible[i][6:-7]))
 else:
     resblock = re.search("tbody>.*</tbody", res, re.DOTALL)
 
@@ -70,14 +70,11 @@ else:
     meaning_en = removechars(meaning_en)
 
     # Set the printing to max 10
-    if len(meaning) > 10:
-        anz = 10
-    else:
-        anz = len(meaning)
+    anz = 10 if len(meaning) > 10 else len(meaning)
 
     # Print the result
     term_col = get_terminal_size().columns
-    print("\n'%s' could stand for the following:\n" % (INPUT.replace('+', ' ')))
+    print("\n'{}' could stand for the following:\n".format(INPUT.replace('+', ' ')))
     for i in range(0, anz):
         meaning_wrap = wrap(meaning[i], width=term_col-10)
         meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
