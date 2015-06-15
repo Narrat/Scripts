@@ -8,16 +8,16 @@
 #
 
 DMENU='dmenu -i -b'
-menitem=$(echo -e "ALSA\nBPython\nCDW\nGnuplot\nJulia\nOctave\nSmuxi-STFL\nViFM\nXmms2" | $DMENU)
+menitem=$(echo -e "ALSA\nBPython\nCDW\nGnuplot\nJulia\nncmpc\nOctave\nSmuxi-STFL\nViFM" | $DMENU)
 
 case "$menitem" in
-  ALSA)         roxterm --role=audio -p Black -T ALSA -e alsamixer ;;
+  ALSA)         roxterm --role=Audio -p Black -T ALSA -e alsamixer ;;
   BPython)      roxterm --role=Science -d ${HOME}/Programmieren/Sprachen/Python --title=BPython -e bpython ;;
   CDW)          roxterm --role=cdw --geometry=110x45 -p Black -T cdw -e /usr/bin/cdw ;;
   Gnuplot)      roxterm --role=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
   Julia)        roxterm --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
+  ncmpc)        roxterm --role=Audio -T ncmpc -e ncmpc ;;
   Octave)       roxterm --role=Science -d ${HOME}/Octave --title=Octave -e octave ;;
   Smuxi-STFL)   roxterm --role=Smuxi --geometry=110x45 -p Black -T Smuxi-STFL -e smuxi-frontend-stfl ;;
   ViFM)         roxterm --role=FileMan --geometry=110x45 -p Black -T ViFM -e vifm ;;
-  Xmms2)        roxterm --role=Xmms2 --title=xmms2 -e nyxmms2 ;;
 esac
