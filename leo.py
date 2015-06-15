@@ -10,7 +10,7 @@ import sys
 import re
 from shutil import get_terminal_size
 from textwrap import wrap
-from lib.py import geturl
+from lib import geturl
 from urllib.parse import quote
 
 # Remove unnecessary chars

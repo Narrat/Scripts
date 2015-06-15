@@ -10,7 +10,7 @@ import sys
 import re
 from shutil import get_terminal_size
 from textwrap import wrap
-from lib.py import geturl
+from lib import geturl
 
 # If nothing is given in the command line; exit
 if len(sys.argv) < 2:
