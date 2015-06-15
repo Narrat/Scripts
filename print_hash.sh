@@ -5,10 +5,10 @@
 # get a dmenu where you choose the hash algo
 # result via dunst (or zenity, or dzen2)
 
-#if [ $# -ne 1 ] ; then
-#    echo "Usage: $0 File"
-#    exit $E_NO_ARGS
-#fi
+if [ $# -ne 1 ] ; then
+    echo "Usage: $0 File"
+    exit $E_NO_ARGS
+fi
 
 INPUT=$1
 
