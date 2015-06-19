@@ -54,5 +54,5 @@ term_col = get_terminal_size().columns
 print("\n'{}' is used as followed:\n".format(INPUT.replace('+', ' ')))
 for i in range(0, anz):
     sentence = "{0:2d}: {1}\n".format(i+1, meaning[i])
-    sentencewrap = wrap(sentence, width=term_col-10)
+    sentencewrap = wrap(sentence, width=term_col-10, replace_whitespace=False)
     print("\n  \u21b3 ".join(sentencewrap))
