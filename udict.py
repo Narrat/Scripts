@@ -38,6 +38,7 @@ for k in range(0, len(meaning)):
     meaning[k] = meaning[k].lstrip("meaning'>\n")
     meaning[k] = meaning[k].rstrip('</div>\n<div class=\'example')
     meaning[k] = meaning[k].replace('<br/>', '\n    ')
+    meaning[k] = meaning[k].replace('<br', '')
     meaning[k] = meaning[k].replace("<a href=\"/define.php?term=", '(UD: ')
     meaning[k] = meaning[k].replace("\">", ' ) ')
     meaning[k] = meaning[k].replace("</a>", '')
