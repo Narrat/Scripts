@@ -25,6 +25,8 @@ def removechars(liste):
         liste[k] = liste[k].replace("</td>", '')
         liste[k] = liste[k].replace("<b>", '')
         liste[k] = liste[k].replace("</b>", '')
+        liste[k] = liste[k].replace("<t>", '')
+        liste[k] = liste[k].replace("</t>", '')
         liste[k] = liste[k].replace("<sup>", '(')
         liste[k] = liste[k].replace("</sup>", ')')
 
