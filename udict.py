@@ -43,9 +43,9 @@ for k in range(0, len(meaning)):
     meaning[k] = meaning[k].replace("\">", ' ) ')
     meaning[k] = meaning[k].replace("</a>", '')
     meaning[k] = meaning[k].replace("\r", '')
-    meaning[k] = meaning[k].replace("&#39;", "'")   # latin-1 ' into utf-8 '
-    meaning[k] = meaning[k].replace("&quot;", "\"") # latin-1 " into utf-8 "
-    meaning[k] = meaning[k].replace("&amp;", "&")   # latin-1 & into utf-8 &
+    meaning[k] = meaning[k].replace("&#39;", "'")    # latin-1 ' into utf-8 '
+    meaning[k] = meaning[k].replace("&quot;", "\"")  # latin-1 " into utf-8 "
+    meaning[k] = meaning[k].replace("&amp;", "&")    # latin-1 & into utf-8 &
 
 # Set the printing to max 10
 anz = 10 if len(meaning) > 10 else len(meaning)

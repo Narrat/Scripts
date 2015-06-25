@@ -4,6 +4,7 @@ import sys
 from http.client import HTTPConnection
 from http.client import HTTPSConnection
 
+
 def connectto(url, body):
     """Connect to url and request a GET with given body.
     Return Connection"""
@@ -18,9 +19,10 @@ def connectto(url, body):
 
     return verbindung
 
+
 def checkresponse(connection, url):
     """Check given connection if there is a redirect.
-    If so: Get Location header and establish a new connection with url and the new body.
+    If so: Get Location header and establish a new connection with the new body.
     Check if reponse is ok,  decode the response and return it"""
     response = connection.getresponse()
     resp_status = response.status

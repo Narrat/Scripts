@@ -13,11 +13,13 @@ from textwrap import wrap
 from lib import geturl
 from urllib.parse import quote
 
-# Remove unnecessary chars
+
 def removechars(liste):
+    """Remove unnecessary chars"""
     for k in range(0, len(liste)):
         liste[k] = liste[k].replace("\n", '')
-        liste[k] = liste[k].replace(str(re.search("lang=.*?>", liste[k]).group()), '')
+        liste[k] = liste[k].replace(str(re.search("lang=.*?>",
+                                                  liste[k]).group()), '')
         liste[k] = liste[k].replace("<small>", '')
         liste[k] = liste[k].replace("</small>", '')
         liste[k] = liste[k].replace("<i>", '')
@@ -57,8 +59,9 @@ res, status = geturl.checkresponse(conn, url)
 if status == 404:
     resblock = re.search("<div class.*</tr></tbody>", res, re.DOTALL)
     possible = re.findall("link\">.*?/span>", resblock.group())
-    possible = list(set(possible)) # Get rid of duplicates
-    print("\n'{}' couldn't be found.\nDid you mean one of the following?\n".format(INPUT.replace('+', ' ')))
+    possible = list(set(possible))  # Get rid of duplicates
+    print("\n'{}' couldn't be found.\nDid you mean one of the following?\n"
+          .format(INPUT.replace('+', ' ')))
     for i in range(0, len(possible)):
         print("  \u00bb {}".format(possible[i][6:-7]))
 else:
@@ -76,7 +79,8 @@ else:
 
     # Print the result
     term_col = get_terminal_size().columns
-    print("\n'{}' could stand for the following:\n".format(INPUT.replace('+', ' ')))
+    print("\n'{}' could stand for the following:\n"
+          .format(INPUT.replace('+', ' ')))
     for i in range(0, anz):
         meaning_wrap = wrap(meaning[i], width=term_col-10)
         meaning_en_wrap = wrap(meaning_en[i], width=term_col-10)
