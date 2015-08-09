@@ -8,11 +8,12 @@
 #
 
 DMENU='dmenu -i -b'
-menitem=$(echo -e "ALSA\nBPython\nCDW\nGnuplot\nJulia\nncmpc\nOctave\npacmixer\nSmuxi-STFL\nViFM" | $DMENU)
+menitem=$(echo -e "ALSA\nBPython\ncanto\nCDW\nGnuplot\nJulia\nncmpc\nOctave\npacmixer\nSmuxi-STFL\nViFM" | $DMENU)
 
 case "$menitem" in
   ALSA)         roxterm --role=Audio -p Black -T ALSA -e alsamixer ;;
   BPython)      roxterm --role=Science -d ${HOME}/Programmieren/Sprachen/Python --title=BPython -e bpython ;;
+  canto)        roxterm --role=Science -T canto -e /usr/bin/canto-curses ;;
   CDW)          roxterm --role=cdw --geometry=110x45 -p Black -T cdw -e /usr/bin/cdw ;;
   Gnuplot)      roxterm --role=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
   Julia)        roxterm --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
