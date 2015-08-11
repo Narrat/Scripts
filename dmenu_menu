@@ -18,7 +18,7 @@ case "$menitem" in
   Gnuplot)      roxterm --role=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
   Julia)        roxterm --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
   ncmpc)        roxterm --role=Audio -T ncmpc -e ncmpc ;;
-  Octave)       roxterm --role=Science -d ${HOME}/Octave --title=Octave -e octave ;;
+  Octave)       roxterm --role=Science -d ${HOME}/Octave --title=Octave -e octave-cli ;;
   pacmixer)     roxterm --role=Audio -T pacmixer -e pacmixer ;;
   Smuxi-STFL)   roxterm --role=Smuxi --geometry=110x45 -T Smuxi-STFL -e smuxi-frontend-stfl ;;
   ViFM)         roxterm --role=FileMan --geometry=110x45 -T ViFM -e vifm ;;
