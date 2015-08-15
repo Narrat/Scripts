@@ -1,10 +1,7 @@
 #!/bin/bash
 #
-# Stuff which isn't tracked via the git repo (binary blob or whatever)
-#
-# TODO:
-# For-Schleife? bzw zweifache For-Schleife um den redundanten Kram weiter zu entfernen. Oder zumindest für die einzelnen Programme
-# Momentane Probleme: Wenn ganze Ordner gesichert werden sollen, wie soll ich testen, ob einzelne Dateien 0 byte haben?
+# Backup Firefox Stuff
+# (Just what remains from the old confback "script". Still to decide if I just save the sqlite files)
 
 # Which location am I executed from?
 HNAME=$(hostname)
@@ -25,25 +22,20 @@ fi
 # Paths:
 ffbook="${FFPATH}bookmarkbackups/$(ls ${FFPATH}bookmarkbackups/ | tail -n1)"
 ffbookback="${BACKPATH}Browser/FFBookmarks.jsonlz4"
-ffsession="${FFPATH}sessionstore.js"
+ffsession="${FFPATH}sessionstore-backups/recovery.js"
 ffsessionback="${BACKPATH}Browser/FFsessionstore.bak"
 
-midoribook=".config/midori/bookmarks.db"
-midoribookback="${BACKPATH}Browser/Midori_bookmarks.db"
 #----------------------
 # Backup md5
 md5BFF=$( md5sum ${ffbookback} | awk '{print $1}' )
 md5BFFs=$( md5sum ${ffsessionback} | awk '{print $1}' )
 
-md5BMI=$( md5sum ${midoribookback} | awk '{print $1}' )
 #----------------------
 # To save md5
 md5FF=$( md5sum ${ffbook} | awk '{print $1}' )
 md5FFs=$( md5sum ${ffsession} | awk '{print $1}' )
 
-md5MI=$( md5sum ${midoribook} | awk '{print $1}' )
 #----------------------
-# Firefox related
 if [ -s ${ffbook} ]; then
 	if [ ${md5BFF} = ${md5FF} ]; then
 		echo Backup der Firefox Lesezeichen ist aktuell
@@ -64,16 +56,4 @@ if [ -s ${ffsession} ]; then
     fi
 else
     echo Null-Fehler bei der Firefox Session Datei...
-fi
-
-# Midori related
-if [ -s ${midoribook} ]; then
-    if [ ${md5BMI} = ${md5MI} ]; then
-        echo Backup der Midori Lesezeichen ist aktuell
-    else
-        cp ${midoribook} ${midoribookback}
-        echo Backup der Midori Lesezeichen erneuert
-    fi
-else
-    echo Null-Fehler bei der Midori Lesezeichen Datei...
 fi
