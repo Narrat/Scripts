@@ -17,7 +17,8 @@ function createmessage {
 
 INPUT=$1
 
-DMENU='dmenu -i -b'
+#DMENU='dmenu -i -b'
+DMENU='rofi -columns 6 -dmenu -l 1 -i -p HASH:'
 menitem=$(echo -e "MD5\nSHA1\nSHA224\nSHA256\nSHA384\nSHA512" | $DMENU)
 
 case "$menitem" in

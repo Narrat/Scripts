@@ -1,13 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 #
-# simple dmenu wrapper
+# simple wrapper for dynamic menues like dmenu (or rofi in dmenu mode)
 # Target is to create a menu that allows more specific startup commands
 # (I miss sth like *box menu on tiling wm)
 # For the moment the items are only the cli ones
 # Geometry parameter remain for openbox
 #
 
-DMENU='dmenu -i -b'
+#DMENU='dmenu -i -b'
+DMENU='rofi -columns 15 -dmenu -l 1 -i -p Menu:'
 menitem=$(echo -e "ALSA\nBPython\ncanto\nCDW\nGnuplot\nJulia\nncmpc\nOctave\npacmixer\nSmuxi-STFL\nViFM" | $DMENU)
 
 case "$menitem" in
