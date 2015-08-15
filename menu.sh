@@ -9,7 +9,7 @@
 
 #DMENU='dmenu -i -b'
 DMENU='rofi -columns 15 -dmenu -l 1 -i -p Menu:'
-menitem=$(echo -e "ALSA\nBPython\ncanto\nCDW\nGnuplot\nJulia\nncmpc\nOctave\npacmixer\nSmuxi-STFL\nViFM" | $DMENU)
+menitem=$(echo -e "ALSA\nBPython\ncanto\nCDW\nGnuplot\nJulia\nncmpc\nOctave\nSmuxi-STFL\nViFM" | $DMENU)
 
 case "$menitem" in
   ALSA)         roxterm --role=Audio -T ALSA -e alsamixer ;;
@@ -20,7 +20,6 @@ case "$menitem" in
   Julia)        roxterm --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
   ncmpc)        roxterm --role=Audio -T ncmpc -e ncmpc ;;
   Octave)       roxterm --role=Science -d ${HOME}/Octave --title=Octave -e octave-cli ;;
-  pacmixer)     roxterm --role=Audio -T pacmixer -e pacmixer ;;
   Smuxi-STFL)   roxterm --role=Smuxi --geometry=110x45 -T Smuxi-STFL -e smuxi-frontend-stfl ;;
   ViFM)         roxterm --role=FileMan --geometry=110x45 -T ViFM -e vifm ;;
 esac
