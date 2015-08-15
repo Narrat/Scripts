@@ -16,7 +16,8 @@ if [ $HNAME == "Hekate" ]; then
 elif [ $HNAME == "Persephone" ]; then
     echo 'Laptop'
     BACKPATH="Backup/Comp/ArchLap/"
-    FFPATH=".mozilla/firefox/p64cifs6.default/"
+    #FFPATH=".mozilla/firefox/p64cifs6.default/"
+    FFPATH=".mozilla/firefox/bnvlq9xm.Crebiz/"
 else
     echo 'Location nicht erkannt'
 fi
