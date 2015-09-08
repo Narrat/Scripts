@@ -8,7 +8,7 @@
 #
 
 #DMENU='dmenu -i -b'
-DMENU='rofi -columns 15 -dmenu -l 1 -i -p Menu:'
+DMENU='rofi -hide-scrollbar -columns 15 -dmenu -l 1 -i -p Menu:'
 menitem=$(echo -e "ALSA\nBPython\ncanto\nCDW\nGnuplot\nJulia\nncmpc\nOctave\nSmuxi-STFL\nViFM" | $DMENU)
 
 case "$menitem" in
