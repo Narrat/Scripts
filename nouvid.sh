@@ -17,5 +17,5 @@ if [ $(pacman -Qqs ^mesa-libgl$) ]; then
     # pacman -R $NOUVEAU
 elif [ $(pacman -Qqs ^${NVIDIA}$) ]; then
     pacman -S --needed $NOUVEAU mesa-libgl # Add lib32-mesa-libgl if needed
-    pacman -R ${NVIDIA}${ADD} ${NVIDIA}-util # Add ${NVIDIA}-lts if needed
+    pacman -R ${NVIDIA}${ADD} ${NVIDIA}-utils # Add ${NVIDIA}-lts if needed
 fi
