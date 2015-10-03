@@ -15,11 +15,7 @@ NOUVEAU=xf86-video-nouveau
 if [ $(pacman -Qqs ^mesa-libgl$) ]; then
     pacman -S ${NVIDIA}${ADD} ${NVIDIA}-libgl # Add lib32-${NVIDIA}-libgl and ${NVIDIA}-lts if needed
     # pacman -R $NOUVEAU
-    # Move Nvidia config in position
-    mv -v "/etc/X11/nvid.xorg.conf.back" "/etc/X11/xorg.conf"
 elif [ $(pacman -Qqs ^${NVIDIA}$) ]; then
     pacman -S --needed $NOUVEAU mesa-libgl # Add lib32-mesa-libgl if needed
-    pacman -R ${NVIDIA}${ADD} # Add ${NVIDIA}-lts if needed
-    # Move Nvidia config away
-    mv -v "/etc/X11/xorg.conf" "/etc/X11/nvid.xorg.conf.back"
+    pacman -R ${NVIDIA}${ADD} ${NVIDIA}-util # Add ${NVIDIA}-lts if needed
 fi
