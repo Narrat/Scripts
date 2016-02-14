@@ -6,7 +6,8 @@
 # * Sane way to use find? Instead of locate
 
 DYNMEN="rofi -dmenu -l7"
-SEARCH_START_DIR=$HOME
+SEARCH_START_DIR=$(pwd)
+SEARCH_BASE_DIR=$HOME
 OPEN_RESULT=xdg-open
 
 searchpath="Alt+F1"
@@ -37,11 +38,11 @@ first_window () {
 search_path () {
     # file browser like behaviour?
     # or just typing?
-    work_dir=$(pwd)
-    if [ "${path}" == "${work_dir}" ]; then
+    # get list of first layer of folders in $HOME?
+    if [ "${path}" == "${SEARCH_BASE_DIR}" ]; then
         cpath="${path}"
     else
-        cpath="${path}\n$(pwd)"
+        cpath="${path}\n${SEARCH_BASE_DIR}"
     fi
     path="$(echo -e $cpath | $DYNMEN -p "Enter path:")"
 
