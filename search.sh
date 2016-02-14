@@ -37,7 +37,13 @@ first_window () {
 search_path () {
     # file browser like behaviour?
     # or just typing?
-    path="$(echo $path | $DYNMEN -p "Enter path:")"
+    work_dir=$(pwd)
+    if [ "${path}" == "${work_dir}" ]; then
+        cpath="${path}"
+    else
+        cpath="${path}\n$(pwd)"
+    fi
+    path="$(echo -e $cpath | $DYNMEN -p "Enter path:")"
 
     first_window
 }
