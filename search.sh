@@ -2,8 +2,6 @@
 #
 # Search - Search after names via find
 #
-# * Specify search path?
-# * Sane way to use find? Instead of locate
 
 DYNMEN="rofi -dmenu -l7"
 SEARCH_START_DIR=$(pwd)
@@ -17,6 +15,8 @@ searchreset="Alt+F3"
 clipinput="$(xsel -o)"
 input=""
 path="${SEARCH_START_DIR}"
+search_mode="-name"
+mode_input=()
 
 # Some functions
 first_window () {
@@ -50,7 +50,13 @@ search_path () {
 }
 
 search_type () {
-    notify-send "Wanted to change the search type"
+    items=("Search for name (case sensitive)" "Search for name (case insensitive)")
+    menitem=$(echo -e "${items[0]}\n${items[1]}" | $DYNMEN -p "What search type?:")
+
+    case "$menitem" in
+      ${items[0]})  search_mode="-iname" ;;
+      ${items[1]})  search_mode="-iname" ;;
+    esac
 
     first_window
 }
@@ -65,12 +71,15 @@ search_reset () {
 # Get name to search for
 first_window
 
+# Globbing chars will be expanded. So crude hack for now
+mode_input+=(${search_mode} "*${input}*")
+#echo ${mode_input[@]}
+
 # Print search result
-if [ "$input" != '' ]
+# Calling the array at whole will also expand the globbing chars
+#result=$(find ${path} ${mode_input[@]} | $DYNMEN -p "Result:")
+result=$(find ${path} ${mode_input[0]} "${mode_input[1]}" | $DYNMEN -p "Result:")
+if [ "$result" != '' ]
 then
-    result="$(echo "$input" | find ${path} -name "*$input*" | $DYNMEN -p "Result:" )"
-    if [ "$result" != '' ]
-    then
-        $OPEN_RESULT "$result"
-    fi
+    $OPEN_RESULT "$result"
 fi
