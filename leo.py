@@ -12,6 +12,7 @@ from shutil import get_terminal_size
 from textwrap import wrap
 from lib import geturl
 from urllib.parse import quote
+from html import unescape
 
 
 def removechars(liste):
@@ -76,6 +77,10 @@ else:
     # Remove unnecessary chars
     meaning = removechars(meaning)
     meaning_en = removechars(meaning_en)
+
+    for item in range(0, len(meaning)):
+        meaning[item] = unescape(meaning[item])
+        meaning_en[item] = unescape(meaning_en[item])
 
     # Set the printing to max 10
     anz = 10 if len(meaning) > 10 else len(meaning)

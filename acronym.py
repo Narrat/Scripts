@@ -10,6 +10,7 @@ import re
 from shutil import get_terminal_size
 from textwrap import wrap
 from lib import geturl
+from html import unescape
 
 
 def removechars(liste):
@@ -19,8 +20,6 @@ def removechars(liste):
         liste[k] = liste[k].replace('- ', '')
         liste[k] = liste[k].replace("\">", '')
         liste[k] = liste[k].replace('<', '')
-        liste[k] = liste[k].replace("&#39;", "'")
-        liste[k] = liste[k].replace("&amp;", "&")
 
     return liste
 
@@ -52,8 +51,10 @@ else:
 if resblock:
     rating = removechars(rating)
     meaning = removechars(meaning)
+    for item in range(0, len(meaning)):
+        meaning[item] = unescape(meaning[item])
 else:
-    ressentence = removechars(ressentence)
+    ressentence = unescape(ressentence)
 
 # Set the printing to max 10
 if resblock:

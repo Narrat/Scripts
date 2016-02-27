@@ -11,6 +11,7 @@ import re
 from shutil import get_terminal_size
 from textwrap import wrap
 from lib import geturl
+from html import unescape
 
 # If nothing is given in the command line; exit
 if len(sys.argv) < 2:
@@ -42,10 +43,7 @@ for k in range(0, len(meaning)):
     meaning[k] = meaning[k].replace("<a href=\"/define.php?term=", '(UD: ')
     meaning[k] = meaning[k].replace("\">", ' ) ')
     meaning[k] = meaning[k].replace("</a>", '')
-    meaning[k] = meaning[k].replace("\r", '')
-    meaning[k] = meaning[k].replace("&#39;", "'")    # latin-1 ' into utf-8 '
-    meaning[k] = meaning[k].replace("&quot;", "\"")  # latin-1 " into utf-8 "
-    meaning[k] = meaning[k].replace("&amp;", "&")    # latin-1 & into utf-8 &
+    meaning[k] = unescape(meaning[k].replace("\r", ''))
 
 # Set the printing to max 10
 anz = 10 if len(meaning) > 10 else len(meaning)
