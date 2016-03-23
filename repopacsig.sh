@@ -38,7 +38,7 @@ download_sig_file () {
     # Construct the URL (https://archive.archlinux.org)
     ALA_URL="https://archive.archlinux.org/packages/${FIRSTL}/${PACKAGENAME}/${PACKAGE}.sig"
     echo "Downloading ${PACKAGE}.sig"
-    curl -o "${FULLP}.sig" ${ALA_URL}
+    curl -s -o "${FULLP}.sig" ${ALA_URL}
 }
 
 # Main body
@@ -48,9 +48,7 @@ del_dispensable_sig
 echo -e "\n\nChecking if Signature files can be downloaded\n"
 for pac_file in ${PACCACHE}/*.xz; do
     if [[ -e $pac_file ]]; then
-        if [[ -e ${pac_file}.sig ]]; then
-            echo "Signature file for ${pac_file} exists"
-        else
+        if [[ ! -e ${pac_file}.sig ]]; then
             download_sig_file ${pac_file}
         fi
     else
