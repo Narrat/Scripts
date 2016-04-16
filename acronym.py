@@ -71,4 +71,4 @@ if resblock:
         sentencewrap = wrap(sentence, width=term_col-10)
         print("\n\t \u21b3 ".join(sentencewrap))
 else:
-    print("\t"+ressentence[0])
+    print("\t"+ressentence[0][2:-17])
