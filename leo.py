@@ -35,6 +35,10 @@ def removechars(liste):
         liste[k] = liste[k].replace("<sub>", '')
         liste[k] = liste[k].replace("</sub>", '')
         liste[k] = liste[k].replace("<br>", ' / ')
+        liste[k] = liste[k].replace("<sr>", '')
+        liste[k] = liste[k].replace("</sr>", '')
+        liste[k] = liste[k].replace("<m>", '')
+        liste[k] = liste[k].replace("</m>", '')
 
     return liste
 
