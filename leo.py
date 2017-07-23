@@ -34,17 +34,12 @@ def removechars(liste):
             liste[k] = liste[k].replace(str(re_dump.group()), '/ ')
 
         liste[k] = liste[k].replace("<span>", '/ ')
-        liste[k] = liste[k].replace("</span>", '')
-        liste[k] = liste[k].replace("<small>", '')
-        liste[k] = liste[k].replace("</small>", '')
-        liste[k] = liste[k].replace("<i>", '')
-        liste[k] = liste[k].replace("</i>", '')
-        liste[k] = liste[k].replace("</td>", '')
-        liste[k] = liste[k].replace("<samp>", '')
-        liste[k] = liste[k].replace("</samp>", '')
-        liste[k] = liste[k].replace("<mark>", '')
-        liste[k] = liste[k].replace("</mark>", '')
-        liste[k] = liste[k].replace("</a>", '')
+
+        re_dump = "reset"
+        while re_dump is not None:
+            re_dump = re.search("<.*?>", liste[k])
+            if re_dump is not None:
+                liste[k] = liste[k].replace(str(re_dump.group()), '')
 
     return liste
 
