@@ -18,27 +18,33 @@ from html import unescape
 def removechars(liste):
     """Remove unnecessary chars"""
     for k in range(0, len(liste)):
-        liste[k] = liste[k].replace("\n", '')
-        liste[k] = liste[k].replace(str(re.search("lang=.*?>",
-                                                  liste[k]).group()), '')
+        #liste[k] = liste[k].replace("\n", '')
+        liste[k] = liste[k].replace(str(re.search("lang=.*?>", liste[k]).group()), '')
+
+        re_dump = re.search("<a href=.*?>", liste[k])
+        if re_dump is not None:
+            liste[k] = liste[k].replace(str(re_dump.group()), '')
+
+        re_dump = re.search("<span c.*/span>", liste[k])
+        if re_dump is not None:
+            liste[k] = liste[k].replace(str(re_dump.group()), '')
+
+        re_dump = re.search("<span t.*?span>", liste[k])
+        if re_dump is not None:
+            liste[k] = liste[k].replace(str(re_dump.group()), '/ ')
+
+        liste[k] = liste[k].replace("<span>", '/ ')
+        liste[k] = liste[k].replace("</span>", '')
         liste[k] = liste[k].replace("<small>", '')
         liste[k] = liste[k].replace("</small>", '')
         liste[k] = liste[k].replace("<i>", '')
         liste[k] = liste[k].replace("</i>", '')
         liste[k] = liste[k].replace("</td>", '')
-        liste[k] = liste[k].replace("<b>", '')
-        liste[k] = liste[k].replace("</b>", '')
-        liste[k] = liste[k].replace("<t>", '')
-        liste[k] = liste[k].replace("</t>", '')
-        liste[k] = liste[k].replace("<sup>", '(')
-        liste[k] = liste[k].replace("</sup>", ')')
-        liste[k] = liste[k].replace("<sub>", '')
-        liste[k] = liste[k].replace("</sub>", '')
-        liste[k] = liste[k].replace("<br>", ' / ')
-        liste[k] = liste[k].replace("<sr>", '')
-        liste[k] = liste[k].replace("</sr>", '')
-        liste[k] = liste[k].replace("<m>", '')
-        liste[k] = liste[k].replace("</m>", '')
+        liste[k] = liste[k].replace("<samp>", '')
+        liste[k] = liste[k].replace("</samp>", '')
+        liste[k] = liste[k].replace("<mark>", '')
+        liste[k] = liste[k].replace("</mark>", '')
+        liste[k] = liste[k].replace("</a>", '')
 
     return liste
 
