@@ -74,7 +74,7 @@ if status == 404:
     for i in range(0, len(possible)):
         print("  \u00bb {}".format(possible[i][6:-7]))
 else:
-    resblock = re.search("<table class=\"tblf.*</table", res, re.DOTALL)
+    resblock = re.search("data-leo-search-term.*?</tr></tbody></table></div>", res, re.DOTALL)
 
     meaning = re.findall("lang=\"de\">.*?</td>", resblock.group(), re.DOTALL)
     meaning_en = re.findall("lang=\"en\">.*?</td>", resblock.group(), re.DOTALL)
