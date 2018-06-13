@@ -57,7 +57,7 @@ INPUT = sys.argv[1:]
 INPUT = '+'.join(INPUT)
 
 # Encode INPUT to URL compatible ASCII and create search url (ende)
-search = "/dictQuery/m-vocab/ende/de.html?searchLoc=0&lp=ende&lang=de&directN=0&search="+quote(INPUT)+"&resultOrder=basic&multiwordShowSingle=on"
+search = "/englisch-deutsch/"+quote(INPUT)
 
 # Connect to page and request result.
 url = "dict.leo.org"
