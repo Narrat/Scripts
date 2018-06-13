@@ -92,7 +92,7 @@ else:
 
     # Print the result
     term_col = get_terminal_size().columns
-    print("\n'{}' could stand for the following:\n"
+    print("\n'{}' could mean the following:\n"
           .format(INPUT.replace('+', ' ')))
     for i in range(0, anz):
         meaning_wrap = wrap(meaning[i], width=term_col-10)
