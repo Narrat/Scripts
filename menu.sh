@@ -7,31 +7,20 @@
 # Geometry parameters remain for openbox.
 #
 
-# Host based terminal sizes
-if [ "$(hostname)" = "Hekate" ]
-then
-    _size1="--geometry=150x55"
-    _size2="--geometry=195x52"
-elif [ "$(hostname)" = "Persephone" ]
-then
-    _size1="--geometry=110x45"
-    _size2=""
-else
-    _size1=""
-    _size2=""
-fi
+# Terminal emulator
+TE=urxvt
 
 #DMENU='dmenu -i -b'
 DMENU='rofi -hide-scrollbar -columns 15 -dmenu -l 1 -i -p Menu:'
 menitem=$(echo -e "ALSA\nBPython\nCanto\nGnuplot\nJulia\nncmpc\nOctave\nViFM\nWeeChat" | $DMENU)
 
 case "$menitem" in
-  ALSA)         termite --role=Audio -t ALSA -e alsamixer ;;
-  Canto)        termite --role=Science -t canto -e /usr/bin/canto-curses ;;
-  Gnuplot)      termite --role=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
-  Julia)        termite --role=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
-  ncmpc)        termite --role=Audio -t ncmpc -e ncmpc ;;
-  Octave)       termite --role=Science -d ${HOME}/Octave --title=Octave -e octave-cli ;;
-  ViFM)         termite --role=FileMan ${_size1} -t ViFM -e vifm ;;
-  WeeChat)      termite --role=WeeChat ${_size2} -e weechat ;;
+  ALSA)         $TE -name Audio -title ALSA -e alsamixer ;;
+  Canto)        $TE -name Science -title canto -e /usr/bin/canto-curses ;;
+  Gnuplot)      $TE -name Science -cd ${HOME}/Gnuplot -title Gnuplot -e gnuplot ;;
+  Julia)        $TE -name Science -cd ${HOME}/Octave/JuliaPort -title Julia -e julia ;;
+  ncmpc)        $TE -name Audio -title ncmpc -e ncmpc ;;
+  Octave)       $TE -name Science -cd ${HOME}/Octave -title Octave -e octave-cli ;;
+  ViFM)         $TE -name FileMan -title ViFM -e vifm ;;
+  WeeChat)      $TE -name WeeChat -e weechat ;;
 esac
