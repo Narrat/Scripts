@@ -8,19 +8,19 @@
 #
 
 # Terminal emulator
-TE=urxvt
+TE=kitty
 
 #DMENU='dmenu -i -b'
 DMENU='rofi -hide-scrollbar -columns 15 -dmenu -l 1 -i -p Menu:'
 menitem=$(echo -e "ALSA\nBPython\nCanto\nGnuplot\nJulia\nncmpc\nOctave\nViFM\nWeeChat" | $DMENU)
 
 case "$menitem" in
-  ALSA)         $TE -name Audio -title ALSA -e alsamixer ;;
-  Canto)        $TE -name Science -title canto -e /usr/bin/canto-curses ;;
-  Gnuplot)      $TE -name Science -cd ${HOME}/Gnuplot -title Gnuplot -e gnuplot ;;
-  Julia)        $TE -name Science -cd ${HOME}/Octave/JuliaPort -title Julia -e julia ;;
-  ncmpc)        $TE -name Audio -title ncmpc -e ncmpc ;;
-  Octave)       $TE -name Science -cd ${HOME}/Octave -title Octave -e octave-cli ;;
-  ViFM)         $TE -name FileMan -title ViFM -e vifm ;;
-  WeeChat)      $TE -name WeeChat -e weechat ;;
+  ALSA)         $TE --class=Audio --title=ALSA -e alsamixer ;;
+  Canto)        $TE --class=Science --title=canto -e /usr/bin/canto-curses ;;
+  Gnuplot)      $TE --class=Science -d ${HOME}/Gnuplot --title=Gnuplot -e gnuplot ;;
+  Julia)        $TE --class=Science -d ${HOME}/Octave/JuliaPort --title=Julia -e julia ;;
+  ncmpc)        $TE --class=Audio --title=ncmpc -e ncmpc ;;
+  Octave)       $TE --class=Science -d ${HOME}/Octave --title=Octave -e octave-cli ;;
+  ViFM)         $TE --class=FileMan --title=ViFM -o initial_window_width=1300 -o initial_window_height=900 -e vifm ;;
+  WeeChat)      $TE --class=WeeChat --class=WeeChat -o initial_window_width=1550 -o initial_window_height=900 -e weechat ;;
 esac
