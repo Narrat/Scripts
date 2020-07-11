@@ -92,7 +92,7 @@ else:
         meaning_en[item] = unescape(meaning_en[item])
 
     # Set the printing to max 10
-    anz = 10 if len(meaning) > 10 else len(meaning)
+    anz = 10 if max_len > 10 else max_len
 
     # Print the result
     term_col = get_terminal_size().columns
