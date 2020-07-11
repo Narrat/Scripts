@@ -83,7 +83,11 @@ else:
     meaning = removechars(meaning)
     meaning_en = removechars(meaning_en)
 
-    for item in range(0, len(meaning)):
+    if (len(meaning) > len(meaning_en)):
+        max_len = len(meaning_en)
+    else:
+        max_len = len(meaning)
+    for item in range(0, max_len):
         meaning[item] = unescape(meaning[item])
         meaning_en[item] = unescape(meaning_en[item])
 
