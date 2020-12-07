@@ -21,9 +21,11 @@ INPUT=$1
 #DMENU='rofi -hide-scrollbar -columns 6 -dmenu -l 1 -i -p HASH:'
 DMENU='bemenu -i -p HASH:'
 
-menitem=$(echo -e "MD5\nSHA1\nSHA224\nSHA256\nSHA384\nSHA512" | $DMENU)
+menitem=$(echo -e "Blake2\nMD5\nSHA1\nSHA224\nSHA256\nSHA384\nSHA512" | $DMENU)
 
 case "$menitem" in
   MD5|SHA*)
     notify-send "${menitem}: $(createmessage ${menitem})" ;;
+  Blake2)
+    notify-send "${menitem}: $(createmessage b2)" ;;
 esac
