@@ -15,15 +15,12 @@ PACCACHE="/var/cache/pacman/pkg"
 
 # check for sig files of missing packages (due to paccache or -Sc/-Scc)
 del_dispensable_sig () {
-    # Check if ajsldjl
     for sig_file in ${PACCACHE}/*.sig; do
-        if [[ -e $sig_file ]]; then
-            if [[ ! -e ${sig_file/.sig/} ]]; then
-                echo "Deleting ${sig_file}"
-                rm -v "${sig_file}"
-            fi
+        if [[ ! -e ${sig_file/.sig/} ]]; then
+            echo "Deleting ${sig_file}"
+            rm -v "${sig_file}"
         else
-            echo "No signature files"
+            echo "No signature files to remove"
         fi
     done
 }
@@ -47,11 +44,9 @@ del_dispensable_sig
 
 echo -e "\n\nChecking if Signature files can be downloaded\n"
 for pac_file in ${PACCACHE}/*.{xz,zst}; do
-    if [[ -e $pac_file ]]; then
-        if [[ ! -e ${pac_file}.sig ]]; then
-            download_sig_file ${pac_file}
-        fi
+    if [[ ! -e ${pac_file}.sig ]]; then
+        download_sig_file ${pac_file}
     else
-        echo "No packages from the repositories"
+        echo "No missing signature files"
     fi
 done
