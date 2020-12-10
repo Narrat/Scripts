@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 #
 # Small script to download signature files for repo packages, so downgrading with -U will work
 # until https://bugs.archlinux.org/task/33091 is implemented
