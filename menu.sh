@@ -22,5 +22,5 @@ case "$menitem" in
   ncmpc)        $TE --class=Audio --title=ncmpc -e ncmpc ;;
   Octave)       $TE --class=Science -d ${HOME}/Octave --title=Octave -e octave-cli ;;
   ViFM)         $TE --class=FileMan --title=ViFM -o initial_window_width=1300 -o initial_window_height=900 -e vifm ;;
-  WeeChat)      $TE --class=WeeChat --class=WeeChat -o initial_window_width=1550 -o initial_window_height=900 -e weechat ;;
+  WeeChat)      $TE --class=WeeChat --title=WeeChat -o initial_window_width=1550 -o initial_window_height=900 -e weechat ;;
 esac
