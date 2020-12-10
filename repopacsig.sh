@@ -46,7 +46,7 @@ echo -e "Checking if Signature files can be deleted\n"
 del_dispensable_sig
 
 echo -e "\n\nChecking if Signature files can be downloaded\n"
-for pac_file in ${PACCACHE}/*.xz; do
+for pac_file in ${PACCACHE}/*.{xz,zst}; do
     if [[ -e $pac_file ]]; then
         if [[ ! -e ${pac_file}.sig ]]; then
             download_sig_file ${pac_file}
