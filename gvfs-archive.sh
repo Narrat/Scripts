@@ -1,5 +1,12 @@
 #!/bin/bash
-# Found on http://ubuntuforums.org/showthread.php?t=1207096&s=504364991bb1155358f39d655cc8e88c
+# ToDo:
+# * Cover unmount
+# * Little help
+# * Check if URL-encode construct is right (it works, but looks odd)
+# * rename
+
+# https://andy.wordpress.com/2008/09/17/urlencode-in-bash-with-perl/
+# https://gitlab.gnome.org/GNOME/glib/-/issues/1456
 
 if [ ! -f "$1" ]
 then
@@ -7,4 +14,4 @@ then
     exit 1
 fi
 
-gvfs-mount "archive://$( ( echo -n 'file://' ; readlink -f "$1" ; ) | perl -MURI::Escape -lne 'print uri_escape($_)')"
+gio mount "archive://$( ( echo -n 'file://' ; readlink -f "$1" ; ) | perl -MURI::Escape -lne 'print uri_escape($_)')"
