@@ -1,4 +1,9 @@
 #!/bin/bash
+# Needs:
+# URI::Escape from Perl
+# or
+# jq
+
 # ToDo:
 # * Cover unmount
 # * Little help
@@ -14,3 +19,4 @@ then
 fi
 
 gio mount "archive://$( readlink -f "$1" | perl -MURI::Escape -lne 'print uri_escape($_)')"
+#gio mount "archive://$( readlink -f "$1" | jq -s -R -r @uri)"
