@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
 # This small script shall prepare some data from the sqlite3 database "mylibrary.db".
-# The data itself is retrieved from the database.
-# The separation is because of ease getting the desired result.
+# The data itself is retrieved from the database with only one query.
 #
 # sqlite3 steps:
 # sqlite> .mode list
@@ -15,36 +14,33 @@
 # If the data should be in one file:
 # sqlite> SELECT author.lastname,author.firstname,book.title,book.series FROM author, book WHERE book.author = author.id ORDER BY author.lastname;
 #
-# Process V2:
-# Get data from the sqlite3 and apply some specific formatting:
+# Process V3:
+# Get data from the sqlite3. Store curr_author and apply some specific formatting:
 # ### Lastname, Firstname
 # * Item (Series)
-# As long the current run through "books" isn't finished, nothing is written to the final file.
+# Not much done to gather data before writing it. Just write it to the file.
 
 import sqlite3
 
 
 def get_data(database):
-    # Get author and book table from the sqlite3 database
+    # Get specific values from the author and book table from the sqlite3 database
     con = sqlite3.connect(database)
     cur = con.cursor()
-    a = cur.execute('SELECT id,lastname,firstname FROM author ORDER BY author.lastname').fetchall()
-    b = cur.execute('SELECT id,author,title,series FROM book').fetchall()
+    data = cur.execute('SELECT author.lastname,author.firstname,book.title,book.series FROM author, book WHERE book.author = author.id ORDER BY author.lastname').fetchall()
     con.close()
-    return a, b
+    return data
 
-def prep_author(curr_author):
-    # Roughly prepare the line: Author-ID and stitch the names together
-    if curr_author[2] is None:
-        return curr_author[0], curr_author[1]
-    elif curr_author[1] is None:
-        return curr_author[0], curr_author[2]
+def prep_author(curr_set):
+    # Roughly prepare the line: Stitch the names together and separate lastname
+    if curr_set[1] is None:
+        return curr_set[0], curr_set[0]
     else:
-        return curr_author[0], curr_author[1]+', '+curr_author[2]
+        return curr_set[0]+', '+curr_set[1], curr_set[0]
 
-def prep_book(curr_book):
-    # Split line into author-ID, title and series
-    return curr_book[1], curr_book[2], curr_book[3]
+def prep_book(curr_set):
+    # Split line into title and series
+    return curr_set[2], curr_set[3]
 
 def formatting_author(name):
     # Prepend Gemini header
@@ -59,33 +55,30 @@ def formatting_book(title, series):
         return '* '+title
 
 def main():
-    # Classical I-loop-through-everything, but this time without text files
-    # Still not the most efficient, but whatever. The dataset is fairly small.
-    # For better performance: per regex the respective books with the fitting author-id
+    # Loop through the dataset
     database = "mylibrary.db"
     gmitext = "booklist_new.gmi"
 
     # Get the data from the sqlite3 database
-    authors, books = get_data(database)
+    data = get_data(database)
+    #print(data)
 
     # Work with the retrieved data
     with open(gmitext, "w") as final:
-        for aline in authors:
-            aid, name = prep_author(aline)
-            name = formatting_author(name)
-            bookcount = 0
-            titles = []
-            for bline in books:
-                b_aid, title, series = prep_book(bline)
-                if (aid == b_aid):
-                    bookcount += 1
-                    book_entry = formatting_book(title, series)
-                    titles.append(book_entry)
-            if (bookcount > 0):
-                final.write(name+'\n')
-                for entry in titles:
-                    final.write(entry+'\n')
-                final.write('\n')
+        last_author = "None"
+        for line in data:
+            #print(line)
+            name, curr_author = prep_author(line)
+            if curr_author != last_author:
+                name = formatting_author(name)
+                #print(name)
+                final.write('\n'+name+'\n')
+            last_author = curr_author
+
+            title, series = prep_book(line)
+            book_entry = formatting_book(title, series)
+            final.write(book_entry)
+            final.write('\n')
 
 if __name__ == '__main__':
     main()
