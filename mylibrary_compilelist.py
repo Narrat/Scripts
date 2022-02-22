@@ -49,7 +49,7 @@ def formatting_author(name):
 def formatting_book(title, series):
     # Series, how the database stores it: [{"title":"Stardust","volume":1.0}] <- JSON, TOML? Something like that
     if series is not None:
-        series = series.replace("[{\"title\":\"", " (").replace("\",\"volume\":", ' ').replace("}]", ")")
+        series = series.replace("[{\"title\":\"", " (").replace("\",\"volume\":", ' ').replace("}]", ")").replace("null", "?")
         return '* '+title+series
     else:
         return '* '+title
