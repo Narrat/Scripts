@@ -34,9 +34,9 @@ def get_data(database):
 def prep_author(curr_set):
     # Roughly prepare the line: Stitch the names together and separate lastname
     if curr_set[1] is None:
-        return curr_set[0], curr_set[0]
+        return curr_set[0]
     else:
-        return curr_set[0]+', '+curr_set[1], curr_set[0]
+        return curr_set[0]+', '+curr_set[1]
 
 def prep_book(curr_set):
     # Split line into title and series
@@ -61,19 +61,16 @@ def main():
 
     # Get the data from the sqlite3 database
     data = get_data(database)
-    #print(data)
 
     # Work with the retrieved data
     with open(gmitext, "w") as final:
         last_author = "None"
         for line in data:
-            #print(line)
-            name, curr_author = prep_author(line)
-            if curr_author != last_author:
+            name = prep_author(line)
+            if name != last_author:
+                last_author = name
                 name = formatting_author(name)
-                #print(name)
                 final.write('\n'+name+'\n')
-            last_author = curr_author
 
             title, series = prep_book(line)
             book_entry = formatting_book(title, series)
