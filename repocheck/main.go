@@ -25,7 +25,7 @@ package main
  * Therefore this small program, which checks by default the current working directory.
  * If an path is supplied as an argument it will change to this folder.
  * Reads all items in the specified location and checks for folders and git repos.
- * If those checks are positive it will fetch from a remote (which is currently guessed).
+ * If those checks are positive it will fetch the remotes.
  */
 
 import (
@@ -44,13 +44,6 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-
-	// Get current working directory
-	/*wd_dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Aktuelles Verzeichnis:", wd_dir)*/
 
 	// Read current dir
 	files, err := os.ReadDir(".")
