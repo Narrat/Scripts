@@ -64,6 +64,7 @@ func main() {
 				remotes, err_fetch := gi.Remotes()
 				if err_fetch != nil {
 					fmt.Println(" :: Couldn't get remotes from", file.Name(), "(", err, ")")
+					continue
 				}
 
 				// Work through remote list
