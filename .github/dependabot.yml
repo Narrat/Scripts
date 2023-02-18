@@ -1,0 +1,8 @@
+# Test on using this with an increasing number of go subfolders?
+
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/repocheck"
+    schedule:
+      interval: "weekly"
