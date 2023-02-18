@@ -68,23 +68,19 @@ func main() {
 			// is a directory, so check if it's a git dir
 			gi, err := git.PlainOpen(file.Name())
 			if err == nil {
-				// check for specific remote
-				remote := "aur"
-				_, err = gi.Remote(remote)
-				if err != nil {
-					//log.Println(err)
-					remote = "origin"
+				remotes, err_fetch := gi.Remotes()
+				if err_fetch != nil {
+					fmt.Println(" :: Couldn't get remotes from", file.Name(), "(", err, ")")
 				}
 
-				// after remote is sorted out fetch from it
-				err = gi.Fetch(&git.FetchOptions{
-					RemoteName: remote,
-				})
-				if err == nil {
-					fmt.Println(" ::", file.Name(), "has updates")
-				} else if err != git.NoErrAlreadyUpToDate {
-					fmt.Println(" ::", file.Name(), "had an unexpected event (", err, ")")
-					//log.Println(err)
+				// Work through remote list
+				for i, val := range remotes {
+					err := val.Fetch(&git.FetchOptions{})
+					if err == nil {
+						fmt.Println(" ::", file.Name(), "has updates with remote", i)
+					} else if err != git.NoErrAlreadyUpToDate {
+						fmt.Println(" ::", file.Name(), "had an unexpected event with remote", i, "(", err, ")")
+					}
 				}
 			}
 		}
