@@ -2,7 +2,7 @@ module repocheck
 
 go 1.19
 
-require github.com/go-git/go-git/v5 v5.5.2
+require github.com/go-git/go-git/v5 v5.6.0
 
 require (
 	github.com/Microsoft/go-winio v0.6.0 // indirect
@@ -17,7 +17,7 @@ require (
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/matryer/is v1.4.0 // indirect
-	github.com/pjbgf/sha1cd v0.2.3 // indirect
+	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/sergi/go-diff v1.3.1 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
