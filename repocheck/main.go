@@ -64,7 +64,7 @@ func main() {
 			if err == nil {
 				remotes, err_fetch := gi.Remotes()
 				if err_fetch != nil {
-					fmt.Println(" :: Couldn't get remotes from", file.Name(), "(", err, ")")
+					fmt.Printf(" :: Couldn't get remotes from '%s' (%v)\n", file.Name(), err)
 					continue
 				}
 
