@@ -32,6 +32,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/go-git/go-git/v5"
 )
@@ -68,12 +69,15 @@ func main() {
 				}
 
 				// Work through remote list
-				for i, val := range remotes {
+				for _, val := range remotes {
+					// Get remote name (why is space and tab mixed?)
+					rem_name := strings.Split(val.String(), "\t")
+					// and the actual "git fetch" operation
 					err := val.Fetch(&git.FetchOptions{})
 					if err == nil {
-						fmt.Println(" ::", file.Name(), "has updates with remote", i)
+						fmt.Printf(" :: %s has updates with remote '%s'\n", file.Name(), rem_name[0])
 					} else if err != git.NoErrAlreadyUpToDate {
-						fmt.Println(" ::", file.Name(), "had an unexpected event with remote", i, "(", err, ")")
+						fmt.Printf(" :: %s had an unexpected event with remote '%s' (%v)\n", file.Name(), rem_name[0], err)
 					}
 				}
 			}
