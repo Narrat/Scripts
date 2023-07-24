@@ -2,7 +2,7 @@ module repocheck
 
 go 1.19
 
-require github.com/go-git/go-git/v5 v5.7.0
+require github.com/go-git/go-git/v5 v5.8.0
 
 require (
 	github.com/Microsoft/go-winio v0.6.0 // indirect
