@@ -18,7 +18,8 @@ or return
 # Set variables
 if set -ql _flag_profile
     set -g profile $_flag_profile
-    echo $profile # TEMP
+else
+    set -g profile header
 end
 
 set -g picture $argv[1]
@@ -34,9 +35,15 @@ set -g picprop "$(magick identify $picture +ping)"
 echo $picprop # TEMP
 # Check error code possible? If the picture isn't a picture the script can abort
 
-# Profile: bots
+# Cropsize definition for various cases
 # Values depend on a picture size of 1080x2160
-magick "$picture" -crop 890x890+95+600 "$picnew"
+switch $profile
+    case header
+        set -g cropwindow "990x680+45+215"
+    case banner
+        set -g cropwindow "990x273+45+215"
+    case bots
+        set -g cropwindow "890x890+95+600"
+end
 
-# TODO: Put the magick command for bots into a switch
-# TODO: Add banner profile
+magick "$picture" -crop $cropwindow "$picnew"
