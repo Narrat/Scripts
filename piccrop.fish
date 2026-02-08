@@ -39,7 +39,7 @@ echo $picprop # TEMP
 # Values depend on a picture size of 1080x2160
 switch $profile
     case header
-        set -g cropwindow "990x680+45+215"
+        set -g cropwindow "990x735+45+215"
     case banner
         set -g cropwindow "990x273+45+215"
     case bots
