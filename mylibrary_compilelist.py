@@ -27,7 +27,7 @@ def get_data(database):
     # Get specific values from the author and book table from the sqlite3 database
     con = sqlite3.connect(database)
     cur = con.cursor()
-    data = cur.execute('SELECT author.lastname,author.firstname,book.title,book.series FROM author, book WHERE book.author = author.id ORDER BY author.lastname').fetchall()
+    data = cur.execute('SELECT author.lastname,author.firstname,book.title,book.series FROM author, book WHERE book.author = author.id AND in_wishlist = 0 ORDER BY author.lastname').fetchall()
     con.close()
     return data
 
