@@ -12,7 +12,11 @@
 # sqlite> SELECT id,lastname,firstname FROM author ORDER BY author.lastname;
 #
 # If the data should be in one file:
-# sqlite> SELECT author.lastname,author.firstname,book.title,book.series FROM author, book WHERE book.author = author.id ORDER BY author.lastname;
+# sqlite> SELECT author.lastname,author.firstname,book.title,book.series
+#         FROM book
+#         LEFT JOIN author ON book.author = author.id
+#         WHERE in_wishlist = 0
+#         ORDER BY author.lastname;
 #
 # Process V3:
 # Get data from the sqlite3. Store curr_author and apply some specific formatting:
@@ -47,7 +51,7 @@ def formatting_author(name):
     return '### '+name
 
 def formatting_book(title, series):
-    # Series, how the database stores it: [{"title":"Stardust","volume":1.0}] <- JSON, TOML? Something like that
+    # Series, how the database stores it: [{"title":"Stardust","volume":1.0}] <- JSON with not-JSON [] around to indicate array
     if series is not None:
         series = series.replace("[{\"title\":\"", " (").replace("\",\"volume\":", ' ').replace("}]", ")").replace("null", "?")
         return '* '+title+series
