@@ -24,6 +24,7 @@
 # * Item (Series)
 # Not much done to gather data before writing it. Just write it to the file.
 
+import json
 import sqlite3
 
 
@@ -50,13 +51,14 @@ def formatting_author(name):
     # Prepend Gemini header
     return '### '+name
 
-def formatting_book(title, series):
+def formatting_book(jdec, title, series):
     # Series, how the database stores it: [{"title":"Stardust","volume":1.0}] <- JSON with not-JSON [] around to indicate array
     if series is not None:
-        series = series.replace("[{\"title\":\"", " (").replace("\",\"volume\":", ' ').replace("}]", ")").replace("null", "?")
-        return '* '+title+series
+        series_d = jdec.decode(series.replace("[", "").replace("]", ""))
+        series = f"({series_d['title']} {series_d['volume']})".replace("None", "?")
+        return f"* {title} {series}"
     else:
-        return '* '+title
+        return f"* {title}"
 
 def main():
     # Loop through the dataset
@@ -65,6 +67,9 @@ def main():
 
     # Get the data from the sqlite3 database
     data = get_data(database)
+
+    # Create a JSONDecoder object
+    jdec = json.JSONDecoder()
 
     # Work with the retrieved data
     with open(gmitext, "w") as final:
@@ -77,7 +82,7 @@ def main():
                 final.write('\n'+name+'\n')
 
             title, series = prep_book(line)
-            book_entry = formatting_book(title, series)
+            book_entry = formatting_book(jdec, title, series)
             final.write(book_entry)
             final.write('\n')
 
